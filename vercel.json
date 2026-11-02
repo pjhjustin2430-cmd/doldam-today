@@ -1,0 +1,21 @@
+{
+  "regions": [
+    "icn1"
+  ],
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    },
+    "api/agent.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
