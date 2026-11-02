@@ -110,37 +110,45 @@ function Tags({ spots, kinds, selectedId, onPick }) {
 // 바람 줄기: 오늘 풍속·풍향대로 지도 위를 흐르는 가는 줄 900개.
 // 저지대 밭(고도 350m 이하의 땅)은 밭담으로 나뉜 곳이라, walls 가 켜져 있으면 그 구역에서 바람이 느려지고 주황색으로 바뀐다 (설명용 표현).
 // wind.from 은 바람이 불어오는 방향 각도(북 0°, 시계방향)라서 줄기는 반대쪽(+180°)으로 흐른다.
-const N_WIND = 900
-function WindField({ wind, walls }) {
+const N_WIND = 1500
+const AMBER = [0.94, 0.7, 0.23]
+const PAPER = '#eceeea' // 지형을 끈 배경색
+function WindField({ wind, walls, dark }) {
+  const base = dark ? [0.22, 0.26, 0.31] : [1, 1, 1], bg = [0.925, 0.933, 0.918] // 지형을 끄면 슬레이트색 줄기가 섬 위에서만 보인다
   const s = useMemo(() => {
     const geo = new THREE.BufferGeometry()
     const pos = new Float32Array(N_WIND * 6), col = new Float32Array(N_WIND * 6)
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3))
-    const p = Array.from({ length: N_WIND }, () => ({ x: (Math.random() - 0.5) * 8, z: (Math.random() - 0.5) * 4.8, slow: 1 }))
+    const p = Array.from({ length: N_WIND }, () => ({ x: (Math.random() - 0.5) * 8, z: (Math.random() - 0.5) * 4.8, slow: 1, vis: 0 }))
     return { geo, pos, col, p, still: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches }
   }, [])
   useFrame((_, rawDt) => {
     const dt = Math.min(rawDt, 0.05)
     const phi = ((wind.from + 180) * Math.PI) / 180
     const dx = Math.sin(phi), dz = -Math.cos(phi) // 북쪽이 -z
-    const base = wind.speed * 0.07, len = 0.1 + wind.speed * 0.018
+    const step = wind.speed * 0.07, len = 0.1 + wind.speed * 0.018 // step: 보기 좋은 흐름 속도(단위/초)
     for (let i = 0; i < N_WIND; i++) {
       const q = s.p[i]
       const lat = 33.38 - q.z / 11.1, lng = 126.55 + q.x / 9.26
       const m = elevation(lat, lng)
       const target = walls && m > 0.5 && m < 350 ? 0.4 : 1 // 밭담 구역(저지대 땅)에서는 40% 속도
       q.slow += (target - q.slow) * Math.min(1, dt * 6)
-      if (!s.still) { q.x += dx * base * q.slow * dt; q.z += dz * base * q.slow * dt }
+      q.vis += ((m > 0.5 ? 1 : 0) - q.vis) * Math.min(1, dt * 8) // 섬 위에 들어오면 서서히 보이고, 벗어나면 사라진다 (지형을 끈 경우)
+      if (!s.still) { q.x += dx * step * q.slow * dt; q.z += dz * step * q.slow * dt }
       if (q.x < -4) q.x = 4; else if (q.x > 4) q.x = -4
       if (q.z < -2.5) q.z = 2.5; else if (q.z > 2.5) q.z = -2.5
       const y = Math.max(0.05, LAND_Y + m / 2000 + 0.05) // 땅 위 0.05 (한라산 비탈을 타고 오른다)
       const o = i * 6, tail = len * (0.55 + 0.45 * q.slow), k = clamp01((1 - q.slow) / 0.6)
       s.pos[o] = q.x; s.pos[o + 1] = y; s.pos[o + 2] = q.z
       s.pos[o + 3] = q.x - dx * tail; s.pos[o + 4] = y; s.pos[o + 5] = q.z - dz * tail
-      // 흰색 → 주황(#f0b23a): 앞(머리)은 진하게, 꼬리는 흐리게
-      s.col[o] = 1 - 0.06 * k; s.col[o + 1] = 1 - 0.31 * k; s.col[o + 2] = 1 - 0.77 * k
-      s.col[o + 3] = s.col[o] * 0.35; s.col[o + 4] = s.col[o + 1] * 0.35; s.col[o + 5] = s.col[o + 2] * 0.35
+      // 기본색 → 주황(#f0b23a): 앞(머리)은 진하게, 꼬리는 흐리게
+      for (let c = 0; c < 3; c++) {
+        let head = base[c] + (AMBER[c] - base[c]) * k
+        if (dark) head += (bg[c] - head) * (1 - q.vis) // 섬 밖에서는 배경색이 되어 안 보인다
+        s.col[o + c] = head
+        s.col[o + 3 + c] = dark ? head + (bg[c] - head) * 0.55 : head * 0.35 // 꼬리: 배경으로 흐려지거나(지형 끔) 어두워진다
+      }
     }
     s.geo.attributes.position.needsUpdate = true
     s.geo.attributes.color.needsUpdate = true
@@ -149,7 +157,7 @@ function WindField({ wind, walls }) {
 }
 const clamp01 = (v) => Math.min(1, Math.max(0, v))
 
-export default function DoldamMap3D({ spots, kinds, selectedId, onPick, wind = null, walls = false }) {
+export default function DoldamMap3D({ spots, kinds, selectedId, onPick, wind = null, walls = false, terrain = false }) {
   const geo = useMemo(() => Object.fromEntries(spots.map((s) => [s.id, { pt: spotPoint(s) }])), [spots])
   const sel = selectedId ? spots.find((s) => s.id === selectedId) : null
   const focus = useMemo(() => {
@@ -160,14 +168,14 @@ export default function DoldamMap3D({ spots, kinds, selectedId, onPick, wind = n
   return (
     <div className="map-canvas">
       <Canvas flat camera={{ position: [0, 9.2, 7.4], fov: 45 }}>
-        <color attach="background" args={[SEA]} />
+        <color attach="background" args={[terrain ? SEA : PAPER]} />
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.03, 0]}>
           <planeGeometry args={[60, 40]} />
-          <meshBasicMaterial color={SEA} />
+          <meshBasicMaterial color={terrain ? SEA : PAPER} />
         </mesh>
-        <Terrain />
-        <Islets />
-        {wind && <WindField wind={wind} walls={walls} />}
+        {terrain && <Terrain />}
+        {terrain && <Islets />}
+        {wind && <WindField wind={wind} walls={walls} dark={!terrain} />}
         <Tags spots={spots} kinds={kinds} selectedId={selectedId} onPick={onPick} />
         <OrbitControls makeDefault enablePan={false} minDistance={1.6} maxDistance={24} maxPolarAngle={Math.PI / 2.2} />
         <CameraRig focus={focus} />

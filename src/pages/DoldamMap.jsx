@@ -26,6 +26,7 @@ export default function DoldamMap() {
   // 바람 줄기: 오늘 제주시 풍속·풍향 (기상청 단기예보). 돌담 켜기 = 밭담 구역에서 바람이 느려지는 설명용 표현
   const [showWind, setShowWind] = useState(true)
   const [walls, setWalls] = useState(false)
+  const [terrain, setTerrain] = useState(false) // 기본은 지형 없이 돌담 핀과 바람 줄기만
   const north = useConditions('제주시')
   const w = north.slots[0]
   const wind = showWind && w && Number.isFinite(w.dir) && Number.isFinite(w.wind) ? { speed: w.wind, from: w.dir } : null
@@ -65,14 +66,17 @@ export default function DoldamMap() {
       <header className="page-head">
         <div className="eyebrow">3D 지도</div>
         <h1>제주를 돌려 보며 돌담 고르기</h1>
-        <p>드래그로 돌리고 휠로 확대하세요. 핀이나 이름표를 누르면 그곳으로 확대되고, 사진이 있는 곳은 사진도 나와요. 키보드 ← → 로 다음 명소, Esc 로 전체 보기. 오른쪽 위에서 오늘 바람을 켜고, "돌담 켜기"로 밭담 구역을 지나는 바람이 약해지는 모습을 볼 수 있어요. "근사 위치" 배지가 붙은 곳은 마을·해안 단위의 대략적인 위치예요.</p>
+        <p>드래그로 돌리고 휠로 확대하세요. 핀이나 이름표를 누르면 그곳으로 확대되고, 사진이 있는 곳은 사진도 나와요. 키보드 ← → 로 다음 명소, Esc 로 전체 보기. 지도에는 돌담 핀과 오늘의 바람 줄기만 있어요. "돌담 켜기"를 누르면 밭담 구역을 지나는 바람이 약해지는 모습을 볼 수 있고, 지형이 필요하면 "지형 보기"를 누르세요. "근사 위치" 배지가 붙은 곳은 마을·해안 단위의 대략적인 위치예요.</p>
       </header>
       <ErrorAlert error={spotsError} />
       <Row className="g-4">
         <Col lg={8}>
           <div className="map-card">
-            {spotsLoading && !spots.length ? <Loading text="불러오는 중..." /> : <DoldamMap3D spots={spots} kinds={kinds} selectedId={selectedId} onPick={pick} wind={wind} walls={walls} />}
+            {spotsLoading && !spots.length ? <Loading text="불러오는 중..." /> : <DoldamMap3D spots={spots} kinds={kinds} selectedId={selectedId} onPick={pick} wind={wind} walls={walls} terrain={terrain} />}
             <div className="map-tools">
+              <button type="button" className={`tool-btn ${terrain ? 'on' : ''}`} aria-pressed={terrain} onClick={() => setTerrain(!terrain)}>
+                <i className="bi bi-layers" />지형 {terrain ? '끄기' : '보기'}
+              </button>
               <button type="button" className={`tool-btn ${showWind ? 'on' : ''}`} aria-pressed={showWind} onClick={() => setShowWind(!showWind)}>
                 <i className="bi bi-wind" />바람 {showWind ? '끄기' : '보기'}
               </button>
