@@ -13,7 +13,7 @@ const TOOLS = {
   find_nearby_places: { label: '주변 장소', src: '한국관광공사 TourAPI', icon: 'geo-alt' },
   get_stonepark_exhibitions: { label: '돌문화공원 전시', src: '제주특별자치도청 오픈API', icon: 'easel' },
 }
-const ARG_LABEL = { kind: '종류', keyword: '검색어', accessibleOnly: '무장애만', spotId: '명소', place: '지역', contentTypeId: '유형', status: '상태', limit: '건수' }
+const ARG_LABEL = { kind: '종류', keyword: '검색어', accessibleOnly: '무장애만', spotId: '명소', place: '지역', contentTypeId: '유형', status: '상태', limit: '건수', day: '날짜' }
 const EXAMPLES = [
   { icon: 'wind', title: '바람 센 날', q: '오늘 바람 센데 갈 만한 돌담 어디야?' },
   { icon: 'universal-access', title: '휠체어로', q: '휠체어로 걸을 수 있는 돌담길 알려줘' },
@@ -21,7 +21,11 @@ const EXAMPLES = [
   { icon: 'camera', title: '사진 찍기', q: '사진 찍기 좋은 환해장성 추천해줘' },
 ]
 
-const argText = (args = {}) => Object.entries(args).map(([k, v]) => `${ARG_LABEL[k] ?? k}: ${v}`).join(' · ')
+// 모델이 **굵게** 표시를 섞어 보내도 별표가 그대로 보이지 않게 굵은 글씨로 바꾼다 (HTML 은 쓰지 않아 안전하다)
+const Rich = ({ text }) => text.split(/\*\*(.+?)\*\*/g).map((part, i) => (i % 2 ? <b key={i}>{part}</b> : part))
+
+const VALUE = { tomorrow: '내일', today: '오늘' }
+const argText = (args = {}) => Object.entries(args).map(([k, v]) => `${ARG_LABEL[k] ?? k}: ${VALUE[v] ?? v}`).join(' · ')
 
 export default function Agent() {
   usePageTitle('돌담지기')
@@ -73,7 +77,7 @@ export default function Agent() {
                     })}
                   </ol>
                 )}
-                <div style={{ whiteSpace: 'pre-wrap' }}>{m.error && <i className="bi bi-exclamation-triangle me-1" />}{m.text}</div>
+                <div style={{ whiteSpace: 'pre-wrap' }}>{m.error && <i className="bi bi-exclamation-triangle me-1" />}<Rich text={m.text} /></div>
                 {m.error && <Button size="sm" variant="outline-danger" className="mt-2" disabled={loading} onClick={() => send(m.retry)}><i className="bi bi-arrow-repeat me-1" />다시 시도</Button>}
               </div>
             ))}

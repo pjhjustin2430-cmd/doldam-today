@@ -320,3 +320,8 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .nv-pin { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--kc); color: #fff; border: 3px solid #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .4); font: 800 .8rem/1 Pretendard, sans-serif; }
 .nv-num { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: #7a5410; border: 2px solid #c8963a; box-shadow: 0 2px 5px rgba(0, 0, 0, .3); font: 800 .8rem/1 Pretendard, sans-serif; cursor: pointer; }
 .nv-dot { display: block; width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 2px solid #3a3f44; }
+
+/* 도구 목록: 오류 문구가 길어도 이름이 세로로 쪼개지지 않게, 오류는 자기 줄에 */
+.agent-steps li { flex-wrap: wrap; }
+.agent-steps li > span:nth-of-type(1) { min-width: 0; }
+.agent-steps li.bad .res { flex-basis: 100%; margin-left: 1.45rem; white-space: normal; font-weight: 600; font-size: .74rem; }

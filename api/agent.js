@@ -31,8 +31,15 @@ const tools = [
   },
   {
     name: 'get_weather',
-    description: '기상청 단기예보로 제주시(북쪽)/서귀포시(남쪽)의 기온·강수확률·풍속을 조회한다',
-    input_schema: { type: 'object', properties: { place: { type: 'string', enum: ['제주시', '서귀포시'] } }, required: ['place'] },
+    description: '기상청 단기예보로 제주시(북쪽)/서귀포시(남쪽)의 기온·강수확률·풍속을 조회한다. 기본은 앞으로 8시간, day=tomorrow 이면 내일 06~20시',
+    input_schema: {
+      type: 'object',
+      properties: {
+        place: { type: 'string', enum: ['제주시', '서귀포시'] },
+        day: { type: 'string', enum: ['today', 'tomorrow'], description: '내일 날씨를 물으면 tomorrow' },
+      },
+      required: ['place'],
+    },
   },
   {
     name: 'find_nearby_places',
@@ -107,7 +114,8 @@ const SYSTEM = `너는 제주 돌담 안내 "돌담지기" 에이전트다. 밭�
 - 휠체어·유모차·무릎이 불편한 사람이 물으면 무장애 정보가 있는 곳(hasTrack)과 get_spot_detail 의 접근성 안내를 근거로 답한다.
 - 비가 오거나 바람이 센 날에는 돌문화공원을 권하고, get_stonepark_exhibitions 로 지금 진행 중인 전시를 확인해 함께 알려 준다.
 - 위치가 근사인 곳은 "지도 앱에서 이름으로 검색해 확인하세요"라고 덧붙인다.
-- 한국어로 5문장 이내로 짧게 답한다.`
+- 내일 날씨를 물으면 get_weather 를 day='tomorrow' 로 부른다.
+- 마크다운 기호(**, #, 목록 기호)는 쓰지 말고 평범한 문장으로, 한국어로 5문장 이내로 짧게 답한다.`
 
 // 키 사용량을 지키려는 간단한 제한: IP 하나당 10분에 20번, 질문은 500자까지 (서버리스에서는 인스턴스별로 세는 최소한의 방어)
 const hits = new Map()

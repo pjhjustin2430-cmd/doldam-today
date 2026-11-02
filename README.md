@@ -1,6 +1,6 @@
 # 돌담 오늘 · 제주 돌담 3D 지도
 
-배포 주소: https://doldam-today-bcyc.vercel.app (GitHub: https://github.com/pjhjustin2430-cmd/doldam-today)
+배포 주소: https://doldam-today-2m16.vercel.app (GitHub: https://github.com/pjhjustin2430-cmd/doldam-today)
 
 바람 많은 섬이 쌓은 제주 돌담(밭담·환해장성·진성·마을 돌담·방사탑·돌염전)을 3D 지도에서 고르고, 오늘 날씨(바람·비·미세먼지)에 맞는 곳을 추천받는 웹앱.
 공공데이터 5종(제주 무장애여행정보 CSV · 제주도청 돌문화공원 전시 API · 기상청 단기예보 · 에어코리아 · 관광공사 TourAPI) + AI 에이전트(돌담지기, 도구 6개) + Supabase 돌담 수첩.

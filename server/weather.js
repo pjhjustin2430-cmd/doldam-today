@@ -15,12 +15,13 @@ function baseDateTime() {
   return { base_date: day.toISOString().slice(0, 10).replaceAll('-', ''), base_time: String(h).padStart(2, '0') + '00' }
 }
 
-export const getWeather = ({ place = '서귀포시' } = {}) => memo(`weather:${place}`, 10 * 60e3, () => fetchWeather(place))
+// day: 'today'(기본, 앞으로 8시간) | 'tomorrow'(내일 06~20시, 2시간 간격)
+export const getWeather = ({ place = '서귀포시', day = 'today' } = {}) => memo(`weather:${place}:${day}`, 10 * 60e3, () => fetchWeather(place, day))
 
-async function fetchWeather(place) {
+async function fetchWeather(place, day) {
   const [nx, ny] = GRID[place] ?? GRID['서귀포시']
   const params = new URLSearchParams({
-    serviceKey: process.env.DATA_GO_KR_KEY, dataType: 'JSON', numOfRows: '300', pageNo: '1',
+    serviceKey: process.env.DATA_GO_KR_KEY, dataType: 'JSON', numOfRows: day === 'tomorrow' ? '1000' : '300', pageNo: '1',
     nx: String(nx), ny: String(ny), ...baseDateTime(),
   })
   const data = await fetchJson(`${BASE}?${params}`, '기상청')
@@ -28,7 +29,12 @@ async function fetchWeather(place) {
   for (const it of toList(data?.response?.body?.items?.item)) {
     (slots[`${it.fcstDate} ${it.fcstTime}`] ??= {})[it.category] = it.fcstValue
   }
-  return Object.entries(slots).slice(0, 8).map(([time, v]) => ({
+  let entries = Object.entries(slots)
+  if (day === 'tomorrow') {
+    const tomorrow = new Date(Date.now() + 33 * 3600e3).toISOString().slice(0, 10).replaceAll('-', '') // 한국 시각 기준 내일
+    entries = entries.filter(([k]) => k.startsWith(tomorrow) && Number(k.slice(9, 11)) >= 6 && Number(k.slice(9, 11)) % 2 === 0)
+  }
+  return entries.slice(0, 8).map(([time, v]) => ({
     place, time, temp: Number(v.TMP), sky: SKY[v.SKY] ?? v.SKY, rain: PTY[v.PTY] ?? v.PTY,
     pop: Number(v.POP), wind: Number(v.WSD),
   }))
