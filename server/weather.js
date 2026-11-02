@@ -1,4 +1,5 @@
 // ② 기상청 단기예보 — 물질(바다 작업) 나가도 되는 날인지 가늠하는 용도
+import { memo } from './cache.js'
 import { fetchJson, toList } from './http.js'
 const BASE = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'
 const GRID = { '제주시': [53, 38], '서귀포시': [52, 33] }
@@ -14,7 +15,9 @@ function baseDateTime() {
   return { base_date: day.toISOString().slice(0, 10).replaceAll('-', ''), base_time: String(h).padStart(2, '0') + '00' }
 }
 
-export async function getWeather({ place = '서귀포시' } = {}) {
+export const getWeather = ({ place = '서귀포시' } = {}) => memo(`weather:${place}`, 10 * 60e3, () => fetchWeather(place))
+
+async function fetchWeather(place) {
   const [nx, ny] = GRID[place] ?? GRID['서귀포시']
   const params = new URLSearchParams({
     serviceKey: process.env.DATA_GO_KR_KEY, dataType: 'JSON', numOfRows: '300', pageNo: '1',

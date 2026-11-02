@@ -1,9 +1,13 @@
 // ③ 한국관광공사 TourAPI(KorService2) — 좌표 주변의 관광지·숙박·식당
+import { memo } from './cache.js'
 import { fetchJson, toList } from './http.js'
 
 const TYPE = { 12: '관광지', 14: '문화시설', 15: '축제·행사', 32: '숙박', 39: '음식점' }
 
-export async function nearbyPlaces({ lat, lng, radius = 3000, contentTypeId = '', rows = 8 } = {}) {
+export const nearbyPlaces = ({ lat, lng, radius = 3000, contentTypeId = '', rows = 8 } = {}) =>
+  memo(`tour:${Number(lat).toFixed(4)},${Number(lng).toFixed(4)},${radius},${contentTypeId},${rows}`, 30 * 60e3, () => fetchNearby({ lat, lng, radius, contentTypeId, rows }))
+
+async function fetchNearby({ lat, lng, radius, contentTypeId, rows }) {
   const params = new URLSearchParams({
     serviceKey: process.env.DATA_GO_KR_KEY, MobileOS: 'ETC', MobileApp: 'DoldamToday', _type: 'json',
     numOfRows: String(rows), pageNo: '1', mapX: String(lng), mapY: String(lat), radius: String(radius), arrange: 'E',
