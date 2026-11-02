@@ -69,12 +69,11 @@ h1, h2, h3, h4, h5, h6 { font-family: inherit; letter-spacing: -.02em; }
 .island-map .map-sub { font-size: 2.6px; fill: #d4d9d6; font-weight: 600; }
 .island-map .map-big { font-size: 6.4px; fill: #f6f3ea; font-weight: 800; letter-spacing: -.02em; }
 .island-map .tag { cursor: pointer; outline: none; }
-.island-map .tag rect { fill: #fff; stroke: #cdd3cf; stroke-width: .3; transition: fill .15s, stroke .15s; }
-.island-map .tag text { font-size: 2.3px; font-weight: 700; fill: var(--ink); pointer-events: none; }
+.island-map .tag rect { stroke: #fff; stroke-width: .35; transition: filter .15s; }
+.island-map .tag text { font-size: 2.3px; font-weight: 700; fill: #fff; pointer-events: none; }
 .island-map .tag .leader { stroke: #9aa39f; stroke-width: .2; }
-.island-map .tag .dot { fill: #fff; stroke-width: .5; }
-.island-map .tag.on rect, .island-map .tag:hover rect, .island-map .tag:focus-visible rect { fill: var(--stone); stroke: var(--stone); }
-.island-map .tag.on text, .island-map .tag:hover text, .island-map .tag:focus-visible text { fill: #fff; }
+.island-map .tag .dot { stroke: #fff; stroke-width: .5; }
+.island-map .tag.on rect, .island-map .tag:hover rect, .island-map .tag:focus-visible rect { filter: brightness(.82) drop-shadow(0 .3px .6px rgba(0,0,0,.35)); }
 
 /* 오늘의 추천 · 기록 */
 .today { border-left: 6px solid var(--brand); }
@@ -439,3 +438,7 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .hm-list button:hover, .hm-list button.on { border-color: var(--kc, var(--brand)); background: var(--brand-soft); }
 .hm-no { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--kc); color: #fff; font-size: .7rem; font-weight: 800; }
 @media (max-width: 575px) { .home-map .hm-box { height: 320px; } }
+
+.kind-legend { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .9rem; margin: .5rem 0 0; padding: 0; font-size: .8rem; color: var(--muted); }
+.kind-legend li { display: inline-flex; align-items: center; gap: .35rem; }
+.kind-legend i { width: 12px; height: 12px; border-radius: 4px; }

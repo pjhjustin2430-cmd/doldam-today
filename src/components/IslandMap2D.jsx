@@ -9,6 +9,7 @@ export default function IslandMap2D({ spots, kinds, onPick, activeId }) {
   const on = hover ?? activeId
 
   return (
+    <>
     <svg viewBox="-58 -36 116 72" className="island-map" role="img" aria-label="제주 돌담 명소 지도">
       <g className="sea-shadow" transform="translate(1.2 1.6)"><path d={COAST_PATH} />{ISLET_PATHS.map((d, i) => <path key={i} d={d} />)}</g>
       <path d={COAST_PATH} className="land" />
@@ -24,13 +25,16 @@ export default function IslandMap2D({ spots, kinds, onPick, activeId }) {
           <g key={s.id} className={`tag ${on === s.id ? 'on' : ''}`} role="button" tabIndex={0} aria-label={s.name}
             onMouseEnter={() => setHover(s.id)} onMouseLeave={() => setHover(null)}
             onClick={() => onPick(s)} onKeyDown={(e) => e.key === 'Enter' && onPick(s)}>
-            <circle cx={dot[0]} cy={dot[1]} r="1.15" className="dot" style={{ stroke: c }} />
-            <rect x={pos[0] - w / 2} y={pos[1] - 2} width={w} height="4" rx="2" />
-            <circle cx={pos[0] - w / 2 + 2} cy={pos[1]} r="0.8" fill={c} className="kc" />
-            <text x={pos[0] + 1.1} y={pos[1] + 0.9} textAnchor="middle">{s.label}</text>
+            <circle cx={dot[0]} cy={dot[1]} r="1.3" className="dot" style={{ fill: c }} />
+            <rect x={pos[0] - w / 2} y={pos[1] - 2} width={w} height="4" rx="2" style={{ fill: c }} />
+            <text x={pos[0]} y={pos[1] + 0.9} textAnchor="middle">{s.label}</text>
           </g>
         )
       })}
     </svg>
+      <ul className="kind-legend" aria-label="돌담 종류 색">
+        {kinds.filter((k) => spots.some((s) => s.kind === k.id)).map((k) => <li key={k.id}><i style={{ background: k.color }} />{k.name}</li>)}
+      </ul>
+    </>
   )
 }
