@@ -35,7 +35,7 @@ create policy "delete all" on favorites for delete using (true);
 | southkorea-maps (kostat 2013) | 해안선 → `src/data/jejuCoast.json` |
 
 - 명소 데이터 만들기: `node scripts/buildDoldam.mjs` → `server/data/doldamSpots.json` 과 `public/doldam/stonepark/*.jpg`(사진을 960px 로 줄임)
-- 감수굴밭담길·돌문화공원은 CSV 의 실측 좌표입니다. 나머지 12곳은 직접 정리한 대표 명소입니다. 이 중 7곳(별방진·성읍·가파도·구엄 돌염전·신흥리 방사탑·신산환해장성·신풍리 밭담길)은 한국관광공사 TourAPI 에 등록된 같은 이름의 관광지라 그 좌표와 사진을 쓰고("관광공사 좌표" 배지), 나머지 5곳(삼양·한담·온평 환해장성, 우도, 김녕)은 OpenStreetMap Nominatim 으로 확인한 마을·해안 단위의 근사 위치입니다("근사 위치" 배지).
+- 감수굴밭담길·돌문화공원은 CSV 의 실측 좌표입니다. 나머지 12곳은 직접 정리한 대표 명소입니다. 이 중 7곳(별방진·성읍·가파도·구엄 돌염전·신흥리 방사탑·신산환해장성·신풍리 밭담길)은 한국관광공사 TourAPI 에 등록된 같은 이름의 관광지라 그 좌표와 사진을 쓰고("관광공사 좌표" 배지), 삼양 환해장성은 위키백과의 같은 이름 항목 좌표("위키백과 좌표"), 온평 환해장성은 성벽을 따라 난 환해장성로의 OpenStreetMap 좌표("지도 데이터 좌표")를 씁니다. 나머지 3곳(한담 환해장성, 우도, 김녕)은 OpenStreetMap Nominatim 으로 확인한 마을·해안 단위의 근사 위치입니다("근사 위치" 배지).
 - 바람과 돌담(`/wind`, three.js): 현무암 돌을 틈을 두고 쌓은 3D 돌담 모형에 오늘 제주시 풍속(기상청 단기예보 WSD)으로 바람 줄기가 불어옵니다. 담 뒤에서는 줄기가 느려지고 주황색이 되며, 작물도 덜 흔들립니다. 바람 세기 슬라이더와 "돌담 치우기"로 비교할 수 있습니다. 담 뒤 감소량(바로 뒤 최대 55%, 담 높이의 몇 배 거리를 지나며 회복)은 원리를 보여주기 위한 **설명용 모형**이며 실측값이 아닙니다.
 - 돌담지기: 예전 `/agent` 페이지 대신 오른쪽 아래의 작은 팝업 창입니다. "돌담지기에게 묻기" 버튼으로 열고 ×로 닫으며, 화면 내용을 밀지 않고 위에 뜹니다. 예전 주소 `/map`·`/agent` 는 새 화면으로 넘어갑니다.
 - 서버 함수: `api/spots.js`(명소·종류) · `api/nearby.js` · `api/weather.js` · `api/air.js` · `api/agent.js`(도구: search_doldam_spots, get_spot_detail, get_weather, find_nearby_places, get_air_quality, get_stonepark_exhibitions) · `api/exhibitions.js`

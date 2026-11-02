@@ -89,7 +89,7 @@ async function spotDetail({ spotId } = {}) {
   const kind = getKinds().find((k) => k.id === s.kind)
   return {
     id: s.id, name: s.name, area: s.area, kind: kind.name, kindInfo: kind.text, tip: kind.tip, story: s.story,
-    positionNote: s.approx ? '마을·해안 단위의 근사 위치' : '실제 좌표',
+    positionNote: s.approx ? '마을·해안 단위의 근사 위치' : s.coordSource === 'osm' ? '성벽을 따라 난 길(OSM)의 좌표' : '실제 좌표',
     walk: s.hasTrack ? { km: s.dist, minutes: s.minutes } : undefined,
     accessibility: s.points?.filter((p) => p.access || p.detail).slice(0, 8).map((p) => `${p.name}: ${[p.detail, p.access].filter(Boolean).join(' / ')}`)
       ?? s.notes?.filter((n) => n.desc).slice(0, 10).map((n) => `${n.name}: ${n.desc}`),
