@@ -63,8 +63,8 @@ export const useAppStore = create(
         set({ favorites: get().favorites.filter((f) => f.id !== id) })
       },
 
-      // 오른쪽 돌담지기 대화창 (넓은 화면은 처음부터 열림)
-      agentOpen: typeof window !== 'undefined' && window.innerWidth >= 1200,
+      // 오른쪽 아래 돌담지기 팝업 (기본은 닫힘)
+      agentOpen: false,
       setAgentOpen: (agentOpen) => set({ agentOpen }),
 
       messages: [],

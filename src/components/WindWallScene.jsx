@@ -4,7 +4,7 @@ import { Html, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 // 돌담과 바람 모형: 1단위 = 약 1m. 돌담은 x=0 에 z 방향으로 길게 서 있고, 바람은 왼쪽(-x)에서 오른쪽(+x)으로 분다.
-export const WALL = { h: 1.4, t: 0.6, len: 16 }
+export const WALL = { h: 2.4, t: 0.7, len: 16 }
 const R = 0.55 // 담 바로 뒤에서 바람이 줄어드는 비율 — 설명용 값 (실제는 담 높이·틈·바람 방향에 따라 다르다)
 
 // 위치 (x, y) 의 바람 세기 비율 (1 = 그대로). 담 바로 뒤에서 가장 약하고, 담 높이의 몇 배 거리를 지나며 서서히 회복한다.
@@ -28,10 +28,12 @@ function StoneWall() {
   const { geo, stones } = useMemo(() => {
     const rnd = seeded(7)
     const out = []
-    ;[0.22, 0.6, 0.98, 1.3].forEach((y, layer) => {
+    const layers = []
+    for (let y = 0.2; y < WALL.h - 0.12; y += 0.37) layers.push(y) // 높이만큼 돌을 단마다 쌓는다
+    layers.forEach((y, layer) => {
       let z = -WALL.len / 2 + rnd() * 0.3
       while (z < WALL.len / 2 - 0.3) {
-        const w = 0.45 + rnd() * 0.45, h = (layer === 3 ? 0.28 : 0.36) + rnd() * 0.1, t = WALL.t * (0.75 + rnd() * 0.3)
+        const w = 0.45 + rnd() * 0.45, h = (layer === layers.length - 1 ? 0.28 : 0.36) + rnd() * 0.1, t = WALL.t * (0.75 + rnd() * 0.3)
         out.push({
           pos: [(rnd() - 0.5) * 0.08, y + (rnd() - 0.5) * 0.05, z + w / 2],
           scale: [t / 2, h / 2, w / 2],
@@ -97,7 +99,7 @@ function Crops({ speed, walls }) {
 }
 
 // 바람 줄기: 빠르면 파란색·길게, 담을 지나 약해지면 주황색·짧게
-const N = 1400, X0 = -13, X1 = 14, TOP = 3.4, ZH = 7.5
+const N = 1700, X0 = -13, X1 = 14, TOP = 5, ZH = 7.5
 // 정점 색은 선형 색공간 값이라, 눈에 보이는 색(sRGB 16진수)을 변환해서 쓴다 (그냥 넣으면 색이 바래 보인다)
 const lin = (hex) => { const c = new THREE.Color(hex); return [c.r, c.g, c.b] }
 const FAST = lin('#1d5a96'), SLOW = lin('#e8860c'), SKY = lin('#dbe8ed')
@@ -142,7 +144,7 @@ function WindStreaks({ speed, walls }) {
 export default function WindWallScene({ speed, walls }) {
   return (
     <div className="wind-canvas">
-      <Canvas shadows camera={{ position: [-2.5, 5.2, 14], fov: 42 }}>
+      <Canvas shadows camera={{ position: [-3, 6, 15.5], fov: 42 }}>
         <color attach="background" args={['#dbe8ed']} />
         <fog attach="fog" args={['#dbe8ed', 26, 46]} />
         <ambientLight intensity={1.2} />
@@ -153,10 +155,10 @@ export default function WindWallScene({ speed, walls }) {
         {walls && <StoneWall />}
         <Crops speed={speed} walls={walls} />
         <WindStreaks speed={speed} walls={walls} />
-        {walls && <Html position={[0, 1.9, 5.5]} center zIndexRange={[10, 0]}><div className="scene-tag">현무암 돌담 · 높이 약 {WALL.h}m</div></Html>}
-        {walls && <Html position={[4.5, 2.3, 3]} center zIndexRange={[10, 0]}><div className="scene-tag amber">담 뒤: 바람이 약해져요</div></Html>}
+        {walls && <Html position={[0, WALL.h + 0.5, 5.5]} center zIndexRange={[10, 0]}><div className="scene-tag">현무암 돌담 · 높이 약 {WALL.h}m</div></Html>}
+        {walls && <Html position={[4.5, 2.6, 3]} center zIndexRange={[10, 0]}><div className="scene-tag amber">담 뒤: 바람이 약해져요</div></Html>}
         <Html position={[-4.5, 2.5, 3.5]} center zIndexRange={[10, 0]}><div className="scene-tag wind">바람 → {speed}m/s</div></Html>
-        <OrbitControls makeDefault enablePan={false} target={[1, 0.8, 0]} minDistance={6} maxDistance={30} maxPolarAngle={Math.PI / 2.15} />
+        <OrbitControls makeDefault enablePan={false} target={[1, 1.1, 0]} minDistance={6} maxDistance={30} maxPolarAngle={Math.PI / 2.15} />
       </Canvas>
     </div>
   )

@@ -70,7 +70,7 @@ export default function WindWall() {
                 </div>
               ))}
             </div>
-            <div className="small text-muted mt-2">땅에서 0.5m 높이 기준이에요. 숫자는 원리를 보여주기 위한 <b>설명용 모형</b>이고, 실제 감소량은 담 높이({WALL.h}m 가정)·돌 틈·바람 방향에 따라 달라요.</div>
+            <div className="small text-muted mt-2">땅에서 0.5m 높이 기준이에요(담 높이는 {WALL.h}m로 만들었어요). 숫자는 원리를 보여주기 위한 <b>설명용 모형</b>이고, 실제 감소량은 담 높이({WALL.h}m 가정)·돌 틈·바람 방향에 따라 달라요.</div>
           </div>
         </Col>
         <Col lg={5}>

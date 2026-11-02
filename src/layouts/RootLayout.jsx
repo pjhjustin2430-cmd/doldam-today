@@ -8,10 +8,9 @@ import { useAppStore } from '../store/useAppStore'
 export default function RootLayout() {
   const toasts = useAppStore((s) => s.toasts)
   const nickname = useAppStore((s) => s.nickname)
-  const agentOpen = useAppStore((s) => s.agentOpen)
 
   return (
-    <div className={`d-flex flex-column min-vh-100 ${agentOpen ? 'dock-open' : ''}`}>
+    <div className="d-flex flex-column min-vh-100">
       <a href="#main" className="skip-link">본문 바로가기</a>
       <Navbar expand="md" className="olle-nav" collapseOnSelect sticky="top">
         <Container>
@@ -75,7 +74,7 @@ export default function RootLayout() {
 
       <AgentDock />
 
-      <ToastContainer position="bottom-end" className="p-3 position-fixed toast-wrap">
+      <ToastContainer position="bottom-end" className="p-3 position-fixed">
         {toasts.map((t) => (
           <Toast key={t.id} bg={t.variant}><Toast.Body className="text-white">{t.message}</Toast.Body></Toast>
         ))}
