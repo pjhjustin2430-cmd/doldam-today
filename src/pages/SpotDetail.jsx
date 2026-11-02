@@ -182,7 +182,7 @@ function Detail({ spot, kind, prev, next, onStamp }) {
         </>
       )}
 
-      <FindPlace title="찾아가기" name={spot.name} />
+      <FindPlace title="찾아가기" spot={spot} />
 
       {spot.hasTrack && galleryEl}
 

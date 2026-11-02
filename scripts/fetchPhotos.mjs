@@ -12,11 +12,7 @@ fs.mkdirSync(OUT, { recursive: true })
 const H = { headers: { 'user-agent': 'doldam-today-student-project/1.0 (education)' } }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-const HANDONG = ['Handong Hwanhaejangseong.jpg', '구좌읍 한동리 환해장성 (같은 환해장성)', 'handong-hwanhae']
 const PICKS = {
-  'hwanhae-samyang': [HANDONG],
-  'hwanhae-handam': [HANDONG],
-  'hwanhae-onpyeong': [HANDONG],
   seongeup: [
     ['Seongeup Historic Village.jpg', '성읍민속마을 초가 골목', 'seongeup-1'],
     ['Seongeup Folk Village 01.jpg', '성읍민속마을 돌담 골목', 'seongeup-2'],
@@ -92,6 +88,10 @@ const TOUR = {
   sinpung: { contentId: 2661821, mode: 'replace', caption: '신풍리 밭담길', names: ['신풍리 밭담길_2', '제주_서귀포_신풍리 밭담길(11)', '제주_서귀포_신풍리 밭담길(12)'] },
   seongeup: { contentId: 126471, mode: 'append', caption: '성읍민속마을', names: ['돌담과 초가에 남은 삶, 제주 성읍마을 여행_제주_서귀포_성읍민속마을_5.jpg', '제주_성읍민속마을 (7)'] },
   gapado: { contentId: 126446, mode: 'append', caption: '밭이 돌담으로 나뉜 가파도', names: ['가파도 (1)'] },
+  // 삼양·한담·온평 환해장성: 관광공사에 환해장성 항목이 없어서, 그 해안에 등록된 관광지(삼양해안도로·애월한담공원·온평리 포구)의 사진을 쓴다. 캡션에는 실제로 찍힌 장소를 적는다.
+  'hwanhae-samyang': { contentId: 2765248, mode: 'replace', caption: '삼양 해안도로', names: ['제주_삼양해안도로 (3)', '제주_삼양해안도로 (4)', '제주_삼양해안도로 (2)'] },
+  'hwanhae-handam': { contentId: 3056625, mode: 'replace', caption: '한담 해안 산책로 (애월한담공원)', names: ['애월한담공원 (7)', '애월한담공원 (8)', '애월한담공원 (2)'] },
+  'hwanhae-onpyeong': { contentId: 3553653, mode: 'replace', caption: '온평리 포구', names: ['서귀포_온평리 포구 (5)', '서귀포_온평리 포구 (2)'] },
   byeolbangjin: { contentId: 128796, mode: 'replace', caption: '별방진', names: ['별방진_6', '별방진_9'] },
 }
 const sharp = (await import('sharp')).default

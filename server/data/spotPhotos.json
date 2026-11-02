@@ -1,37 +1,4 @@
 {
- "hwanhae-samyang": [
-  {
-   "src": "/doldam/spots/handong-hwanhae.jpg",
-   "caption": "구좌읍 한동리 환해장성 (같은 환해장성)",
-   "credit": "Chipmunkdavis",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Handong_Hwanhaejangseong.jpg",
-   "source": "Wikimedia Commons"
-  }
- ],
- "hwanhae-handam": [
-  {
-   "src": "/doldam/spots/handong-hwanhae.jpg",
-   "caption": "구좌읍 한동리 환해장성 (같은 환해장성)",
-   "credit": "Chipmunkdavis",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Handong_Hwanhaejangseong.jpg",
-   "source": "Wikimedia Commons"
-  }
- ],
- "hwanhae-onpyeong": [
-  {
-   "src": "/doldam/spots/handong-hwanhae.jpg",
-   "caption": "구좌읍 한동리 환해장성 (같은 환해장성)",
-   "credit": "Chipmunkdavis",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Handong_Hwanhaejangseong.jpg",
-   "source": "Wikimedia Commons"
-  }
- ],
  "seongeup": [
   {
    "src": "/doldam/spots/seongeup-1.jpg",
@@ -269,6 +236,76 @@
    "credit": "한국관광공사",
    "license": "공공누리 제3유형",
    "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  }
+ ],
+ "hwanhae-samyang": [
+  {
+   "src": "/doldam/spots/hwanhae-samyang-kto-1.jpg",
+   "caption": "삼양 해안도로",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/hwanhae-samyang-kto-2.jpg",
+   "caption": "삼양 해안도로",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/hwanhae-samyang-kto-3.jpg",
+   "caption": "삼양 해안도로",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  }
+ ],
+ "hwanhae-handam": [
+  {
+   "src": "/doldam/spots/hwanhae-handam-kto-1.jpg",
+   "caption": "한담 해안 산책로 (애월한담공원)",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/hwanhae-handam-kto-2.jpg",
+   "caption": "한담 해안 산책로 (애월한담공원)",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/hwanhae-handam-kto-3.jpg",
+   "caption": "한담 해안 산책로 (애월한담공원)",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  }
+ ],
+ "hwanhae-onpyeong": [
+  {
+   "src": "/doldam/spots/hwanhae-onpyeong-kto-1.jpg",
+   "caption": "온평리 포구",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/hwanhae-onpyeong-kto-2.jpg",
+   "caption": "온평리 포구",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
    "source": "TourAPI"
   }
  ],

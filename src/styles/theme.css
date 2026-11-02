@@ -394,3 +394,4 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .dock-fab i { font-size: 1.1rem; }
 .dock-body { overflow-x: hidden; }
 .dock-body .msg { overflow-wrap: anywhere; }
+.find-link small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }

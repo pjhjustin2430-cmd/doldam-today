@@ -156,6 +156,13 @@ const spots = [
     summary: '마을 안 밭담 사이로 걷는 길', story: '성산읍 신풍리 마을 안쪽, 밭담이 이어진 골목과 밭 사이를 걷는 길이에요. 관광공사에 밭담길로 등록돼 있고, 낮은 돌담 너머로 밭이 보여요.' },
 ]
 
+// 네이버지도 검색어: 지도에 실제로 있는 이름. 환해장성처럼 지도에 따로 없는 곳은 그 해안의 지명으로 찾는다
+const MAPQ = {
+  'hwanhae-samyang': '삼양해안도로', 'hwanhae-handam': '한담해안산책로', 'hwanhae-onpyeong': '온평리 포구',
+  udo: '우도', gimnyeong: '김녕리', gapado: '가파도', gueom: '구엄리 돌염전', sinheung: '신흥리 방사탑', stonepark: '제주돌문화공원',
+}
+for (const s of spots) s.mapQuery = MAPQ[s.id] ?? s.name
+
 // 걷는 거리·시간: 실제 경로가 있으면 경로 길이로 계산
 for (const s of spots) {
   if (s.path) {
