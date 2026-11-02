@@ -5,7 +5,6 @@ import Home from './pages/Home'
 import WindWall from './pages/WindWall'
 import Spots from './pages/Spots'
 import SpotDetail from './pages/SpotDetail'
-import Guide from './pages/Guide'
 import My from './pages/My'
 import NotFound from './pages/NotFound'
 import { useAppStore } from './store/useAppStore'
@@ -13,8 +12,7 @@ import { useAppStore } from './store/useAppStore'
 export const NAV_ITEMS = [
   { to: '/', label: '홈', icon: 'house' },
   { to: '/wind', label: '바람과 돌담', icon: 'wind' },
-  { to: '/spots', label: '명소', icon: 'list-ul' },
-  { to: '/guide', label: '돌담 도감', icon: 'journal-bookmark' },
+  { to: '/spots', label: '명소·도감', icon: 'bricks' },
   { to: '/my', label: '내 수첩', icon: 'patch-check' },
 ]
 
@@ -36,7 +34,7 @@ export const router = createBrowserRouter([
       { path: 'map', element: <Navigate to="/wind" replace /> }, // 예전 3D 지도 주소
       { path: 'spots', element: <Spots /> },
       { path: 'spots/:id', element: <SpotDetail /> },
-      { path: 'guide', element: <Guide /> },
+      { path: 'guide', element: <Navigate to="/spots" replace /> }, // 예전 도감 주소
       { path: 'agent', element: <OpenAgent /> },
       { path: 'my', element: <My /> },
       { path: '*', element: <NotFound /> }, // 없는 주소는 메뉴·푸터가 있는 레이아웃 안에서 안내

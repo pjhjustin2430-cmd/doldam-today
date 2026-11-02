@@ -79,8 +79,8 @@ export default function WindWall() {
             <p className="small mb-2">틈 없이 막힌 벽은 바람을 정면으로 받아 쓰러지기 쉽고, 벽 뒤에 거센 소용돌이가 생겨요. 제주 돌담은 구멍이 숭숭 뚫려 있어 바람의 일부를 흘려보내면서 속도만 늦춰요. 그래서 담도 버티고, 담 뒤의 흙과 작물도 지켜져요.</p>
             {batdam && <p className="small text-muted mb-3">{batdam.text}</p>}
             <div className="d-flex gap-2 flex-wrap">
-              <Link to="/spots" className="btn btn-sm btn-outline-primary"><i className="bi bi-bricks me-1" />밭담 명소 보기</Link>
-              <Link to="/guide" className="btn btn-sm btn-outline-primary"><i className="bi bi-journal-bookmark me-1" />돌담 도감</Link>
+              <Link to="/spots?kind=batdam" className="btn btn-sm btn-outline-primary"><i className="bi bi-grid-3x3 me-1" />밭담 명소 보기</Link>
+              <Link to="/spots" className="btn btn-sm btn-outline-primary"><i className="bi bi-bricks me-1" />돌담 종류 알아보기</Link>
             </div>
           </div>
         </Col>
