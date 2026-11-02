@@ -90,11 +90,6 @@ h1, h2, h3, h4, h5, h6 { font-family: inherit; letter-spacing: -.02em; }
 .detail-head h1 { font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.3rem); margin: 0; }
 .crumb { color: var(--muted); font-size: .85rem; text-decoration: none; display: inline-block; margin-bottom: .6rem; }
 .spot-map { position: relative; border-radius: 1.25rem; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: #dfe9e5; }
-.spot-map svg { display: block; width: 100%; height: auto; max-height: 420px; }
-.spot-map .sea { fill: #dfe9e5; }
-.land-mini { fill: #cfd0c8; stroke: #8a8f8b; stroke-linejoin: round; }
-.spot-map .spot { cursor: pointer; }
-.spot, .spot text { text-decoration: none; }
 .map-note { font-size: .8rem; color: var(--muted); margin: .5rem .25rem 0; }
 
 .stat-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; margin-top: 2rem; background: var(--line); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
@@ -388,3 +383,11 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .dock-body { overflow-x: hidden; }
 .dock-body .msg { overflow-wrap: anywhere; }
 .find-link small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }
+
+/* Leaflet 지도: 지도 안쪽 z-index 가 메뉴·팝업을 넘지 않게 가둔다 */
+.leaflet-wrap { isolation: isolate; }
+.leaflet-wrap .leaflet-container { font-family: inherit; background: #dfe9e5; }
+.leaflet-wrap .leaflet-control-layers { border-radius: .7rem; box-shadow: var(--shadow); font-size: .8rem; font-weight: 600; }
+.leaflet-wrap .leaflet-div-icon { background: none; border: 0; }
+
+.leaflet-wrap .leaflet-attribution-flag { width: 1em; height: .67em; display: inline-block; vertical-align: baseline; }
