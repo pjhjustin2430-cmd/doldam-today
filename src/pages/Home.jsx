@@ -51,8 +51,8 @@ export default function Home() {
             <Cond title="서귀포시" c={south} />
           </div>
           <div className="d-flex gap-2 flex-wrap">
-            <Button as={Link} to="/map" variant="primary" size="lg"><i className="bi bi-badge-3d me-2" />3D 지도</Button>
-            <Button as={Link} to="/agent" variant="outline-primary" size="lg"><i className="bi bi-chat-dots me-2" />돌담지기</Button>
+            <Button as={Link} to="/wind" variant="primary" size="lg"><i className="bi bi-wind me-2" />바람과 돌담</Button>
+            <Button variant="outline-primary" size="lg" onClick={() => useAppStore.getState().setAgentOpen(true)}><i className="bi bi-chat-dots me-2" />돌담지기에게 묻기</Button>
           </div>
         </div>
         <div className="hero-map">
@@ -75,7 +75,6 @@ export default function Home() {
           <FactChips c={today.spot.weather === '제주시' ? north : south} place={today.spot.weather} />
           <div className="d-flex gap-2 flex-wrap">
             <Button as={Link} to={`/spots/${today.spot.id}`} variant="primary">자세히 보기</Button>
-            <Button variant="outline-primary" onClick={() => { useAppStore.getState().select(today.spot.id); navigate('/map') }}><i className="bi bi-badge-3d me-1" />3D 지도에서</Button>
           </div>
         </div>
       ) : <div className="panel text-muted small">{north.loading || south.loading ? '날씨를 확인하는 중...' : '예보를 불러오지 못해 추천을 만들 수 없어요.'}</div>}

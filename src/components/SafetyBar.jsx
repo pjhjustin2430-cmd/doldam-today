@@ -19,7 +19,7 @@ export default function SafetyBar() {
         <b className="me-2">오늘 걷기 안내</b>
         {fits.map(([place, f]) => `${place} ${f.label}`).join(' · ')}
         {worst === 'danger' && ' — 무리하지 마세요'}
-        <Link to="/map" className="ms-2 text-white text-decoration-underline">지도에서 보기</Link>
+        <Link to="/wind" className="ms-2 text-white text-decoration-underline">바람과 돌담 보기</Link>
       </span>
       <button type="button" aria-label="닫기" onClick={() => setOpen(false)}>×</button>
     </div>

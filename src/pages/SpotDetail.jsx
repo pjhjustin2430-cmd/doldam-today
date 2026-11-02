@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Badge, Button, Carousel, Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ElevationChart from '../components/ElevationChart'
 import Exhibitions from '../components/Exhibitions'
 import FindPlace from '../components/FindPlace'
@@ -22,8 +22,7 @@ const TABS = [['12', '주변 관광지'], ['39', '주변 식당'], ['32', '주�
 // 명소 상세: 지도 · 돌담 이야기 · (실측 경로가 있으면) 고도·구간 안내 · 사진 · 주변 정보(관광공사 TourAPI)
 export default function SpotDetail() {
   const { id } = useParams()
-  const navigate = useNavigate()
-  const { spots, kinds, loadSpots, stamp, select } = useAppStore()
+  const { spots, kinds, loadSpots, stamp } = useAppStore()
   useEffect(() => { loadSpots() }, [loadSpots])
   const idx = spots.findIndex((s) => s.id === id)
   const spot = spots[idx]
@@ -32,10 +31,10 @@ export default function SpotDetail() {
   if (!spot) return <Empty text="없는 명소예요" />
 
   return <Detail key={spot.id} spot={spot} kind={kinds.find((k) => k.id === spot.kind)} prev={spots[idx - 1]} next={spots[idx + 1]}
-    onStamp={() => stamp(spot)} onMap={() => { select(spot.id); navigate('/map') }} />
+    onStamp={() => stamp(spot)} />
 }
 
-function Detail({ spot, kind, prev, next, onStamp, onMap }) {
+function Detail({ spot, kind, prev, next, onStamp }) {
   usePageTitle(spot.name)
   const { fit, slots, air } = useConditions(placeOf(spot))
   const [tab, setTab] = useState('12')
@@ -101,7 +100,6 @@ function Detail({ spot, kind, prev, next, onStamp, onMap }) {
           <h1>{spot.name}</h1>
         </div>
         <div className="d-flex gap-2 flex-wrap">
-          <Button variant="outline-primary" onClick={onMap}><i className="bi bi-badge-3d me-1" />3D 지도에서 보기</Button>
           <Button variant="primary" onClick={onStamp}><i className="bi bi-patch-check me-1" />돌담 도장</Button>
         </div>
       </div>

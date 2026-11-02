@@ -1,15 +1,17 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { Container, Nav, Navbar, Toast, ToastContainer } from 'react-bootstrap'
 import { NAV_ITEMS } from '../router'
+import AgentDock from '../components/AgentDock'
 import SafetyBar from '../components/SafetyBar'
 import { useAppStore } from '../store/useAppStore'
 
 export default function RootLayout() {
   const toasts = useAppStore((s) => s.toasts)
   const nickname = useAppStore((s) => s.nickname)
+  const agentOpen = useAppStore((s) => s.agentOpen)
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className={`d-flex flex-column min-vh-100 ${agentOpen ? 'dock-open' : ''}`}>
       <a href="#main" className="skip-link">본문 바로가기</a>
       <Navbar expand="md" className="olle-nav" collapseOnSelect sticky="top">
         <Container>
@@ -71,7 +73,9 @@ export default function RootLayout() {
         </Container>
       </footer>
 
-      <ToastContainer position="bottom-end" className="p-3 position-fixed">
+      <AgentDock />
+
+      <ToastContainer position="bottom-end" className="p-3 position-fixed toast-wrap">
         {toasts.map((t) => (
           <Toast key={t.id} bg={t.variant}><Toast.Body className="text-white">{t.message}</Toast.Body></Toast>
         ))}

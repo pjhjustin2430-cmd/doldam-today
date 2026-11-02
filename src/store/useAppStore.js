@@ -26,8 +26,6 @@ export const useAppStore = create(
       kinds: [],
       spotsLoading: false,
       spotsError: '',
-      selectedId: null,
-      select: (selectedId) => set({ selectedId }),
       loadSpots: async () => {
         if (get().spots.length || get().spotsLoading) return
         set({ spotsLoading: true, spotsError: '' })
@@ -64,6 +62,10 @@ export const useAppStore = create(
         if (error) return get().toast(error.message, 'danger')
         set({ favorites: get().favorites.filter((f) => f.id !== id) })
       },
+
+      // 오른쪽 돌담지기 대화창 (넓은 화면은 처음부터 열림)
+      agentOpen: typeof window !== 'undefined' && window.innerWidth >= 1200,
+      setAgentOpen: (agentOpen) => set({ agentOpen }),
 
       messages: [],
       chatLoading: false,

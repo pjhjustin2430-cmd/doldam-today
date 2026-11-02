@@ -1,22 +1,29 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
-import DoldamMap from './pages/DoldamMap'
+import WindWall from './pages/WindWall'
 import Spots from './pages/Spots'
 import SpotDetail from './pages/SpotDetail'
 import Guide from './pages/Guide'
-import Agent from './pages/Agent'
 import My from './pages/My'
 import NotFound from './pages/NotFound'
+import { useAppStore } from './store/useAppStore'
 
 export const NAV_ITEMS = [
   { to: '/', label: '홈', icon: 'house' },
-  { to: '/map', label: '3D 지도', icon: 'map' },
+  { to: '/wind', label: '바람과 돌담', icon: 'wind' },
   { to: '/spots', label: '명소', icon: 'list-ul' },
   { to: '/guide', label: '돌담 도감', icon: 'journal-bookmark' },
-  { to: '/agent', label: '돌담지기', icon: 'chat-dots' },
   { to: '/my', label: '내 수첩', icon: 'patch-check' },
 ]
+
+// 예전 돌담지기 주소(/agent): 오른쪽 대화창을 열고 홈으로
+function OpenAgent() {
+  const setAgentOpen = useAppStore((s) => s.setAgentOpen)
+  useEffect(() => { setAgentOpen(true) }, [setAgentOpen])
+  return <Navigate to="/" replace />
+}
 
 export const router = createBrowserRouter([
   {
@@ -25,11 +32,12 @@ export const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'map', element: <DoldamMap /> },
+      { path: 'wind', element: <WindWall /> },
+      { path: 'map', element: <Navigate to="/wind" replace /> }, // 예전 3D 지도 주소
       { path: 'spots', element: <Spots /> },
       { path: 'spots/:id', element: <SpotDetail /> },
       { path: 'guide', element: <Guide /> },
-      { path: 'agent', element: <Agent /> },
+      { path: 'agent', element: <OpenAgent /> },
       { path: 'my', element: <My /> },
       { path: '*', element: <NotFound /> }, // 없는 주소는 메뉴·푸터가 있는 레이아웃 안에서 안내
     ],

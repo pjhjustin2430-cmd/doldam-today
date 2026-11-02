@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import InfoBadge from '../components/InfoBadge'
 import KindBadge from '../components/KindBadge'
 import PageHeader from '../components/PageHeader'
@@ -12,8 +12,7 @@ import { useAppStore } from '../store/useAppStore'
 // 돌담 명소 목록: 이름 검색 + 종류 + 무장애 정보 여부로 거른다
 export default function Spots() {
   usePageTitle('돌담 명소')
-  const { spots, kinds, spotsLoading, spotsError, loadSpots, select, stamp } = useAppStore()
-  const navigate = useNavigate()
+  const { spots, kinds, spotsLoading, spotsError, loadSpots, stamp } = useAppStore()
   const [kind, setKind] = useState('')
   const [onlyTrack, setOnlyTrack] = useState(false)
   const [q, setQ] = useState('')
@@ -63,7 +62,6 @@ export default function Spots() {
                     <div className="small text-muted mb-1">{s.area}{s.hasTrack ? ` · ${s.dist}km · 약 ${s.minutes}분` : ''}</div>
                     <Card.Text className="small flex-grow-1">{s.summary}</Card.Text>
                     <div className="d-flex gap-2">
-                      <Button size="sm" variant="outline-primary" className="position-relative" style={{ zIndex: 2 }} onClick={() => { select(s.id); navigate('/map') }}><i className="bi bi-map me-1" />지도에서 보기</Button>
                       <Button size="sm" variant="outline-primary" className="position-relative" style={{ zIndex: 2 }} onClick={() => stamp(s)}><i className="bi bi-patch-check me-1" />도장</Button>
                     </div>
                   </Card.Body>
