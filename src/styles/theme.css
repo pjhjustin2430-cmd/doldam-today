@@ -390,3 +390,5 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .dock-fab { position: fixed; right: 1.2rem; bottom: 1.2rem; z-index: 1040; display: inline-flex; align-items: center; gap: .45rem; border: 0; border-radius: 99px; padding: .7rem 1.1rem; background: var(--stone); color: #fff; font-weight: 700; box-shadow: 0 8px 22px rgba(30, 34, 38, .3); }
 .dock-fab:hover { background: #2a2e32; }
 .dock-fab i { font-size: 1.1rem; }
+.dock-body { overflow-x: hidden; }
+.dock-body .msg { overflow-wrap: anywhere; }

@@ -155,7 +155,7 @@ export default function WindWallScene({ speed, walls }) {
         <WindStreaks speed={speed} walls={walls} />
         {walls && <Html position={[0, 1.9, 5.5]} center zIndexRange={[10, 0]}><div className="scene-tag">현무암 돌담 · 높이 약 {WALL.h}m</div></Html>}
         {walls && <Html position={[4.5, 2.3, 3]} center zIndexRange={[10, 0]}><div className="scene-tag amber">담 뒤: 바람이 약해져요</div></Html>}
-        <Html position={[-6.5, 2.6, 4]} center zIndexRange={[10, 0]}><div className="scene-tag wind">바람 → {speed}m/s</div></Html>
+        <Html position={[-4.5, 2.5, 3.5]} center zIndexRange={[10, 0]}><div className="scene-tag wind">바람 → {speed}m/s</div></Html>
         <OrbitControls makeDefault enablePan={false} target={[1, 0.8, 0]} minDistance={6} maxDistance={30} maxPolarAngle={Math.PI / 2.15} />
       </Canvas>
     </div>

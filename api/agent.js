@@ -130,6 +130,16 @@ function tooMany(req) {
   return recent.length > 20
 }
 
+// Claude API 오류를 사람이 읽을 수 있는 말로 (원문 JSON 을 화면에 그대로 내보내지 않는다)
+function friendly(e) {
+  const msg = String(e?.message ?? '')
+  if (/credit balance/i.test(msg)) return 'Claude API 크레딧이 부족해요. Anthropic 콘솔의 Billing 에서 충전한 뒤 다시 시도해 주세요.'
+  if (e?.status === 401 || /api[_ ]?key|authentication/i.test(msg)) return 'Claude API 키가 올바르지 않아요. Vercel 환경변수 ANTHROPIC_API_KEY 를 확인해 주세요.'
+  if (e?.status === 429) return '요청이 많아요. 잠시 뒤 다시 시도해 주세요.'
+  if (e?.status === 529 || /overloaded/i.test(msg)) return 'Claude 서버가 붐벼요. 잠시 뒤 다시 시도해 주세요.'
+  return '돌담지기가 답하지 못했어요. 잠시 뒤 다시 시도해 주세요.'
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' })
   if (tooMany(req)) return res.status(429).json({ error: '질문이 너무 많아요. 10분 뒤에 다시 시도해 주세요.' })
@@ -162,6 +172,6 @@ export default async function handler(req, res) {
     }
     res.status(200).json({ answer: '도구 호출이 너무 많아 중단했어요. 질문을 좁혀 주세요.', steps })
   } catch (e) {
-    res.status(e.status ?? 500).json({ error: e.status === 429 ? '사용량이 많아요. 잠시 뒤 다시 시도하세요.' : e.message })
+    res.status(e.status ?? 500).json({ error: friendly(e) })
   }
 }
