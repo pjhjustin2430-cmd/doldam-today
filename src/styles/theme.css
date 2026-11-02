@@ -391,3 +391,36 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .leaflet-wrap .leaflet-div-icon { background: none; border: 0; }
 
 .leaflet-wrap .leaflet-attribution-flag { width: 1em; height: .67em; display: inline-block; vertical-align: baseline; }
+
+/* 돌담지기: 제주 바다빛 청록 + 귤색 포인트 */
+.agent-dock, .dock-fab {
+  --dk: #17414a; --dk2: #266a73; --dk-soft: #e8f2f2; --dk-line: #d3e3e4; --tang: #f08a24; --tang-deep: #d9730f;
+}
+.agent-dock { width: 372px; border: 0; border-radius: 1.3rem; background: #fbfcfc; box-shadow: 0 24px 60px rgba(14, 44, 50, .35), 0 0 0 1px rgba(23, 65, 74, .08); }
+.dock-head { position: relative; border: 0; border-radius: 0; padding: 1rem 1rem .95rem; color: #fff; background: radial-gradient(120% 140% at 100% 0%, rgba(240, 138, 36, .28), transparent 55%), linear-gradient(135deg, var(--dk) 0%, var(--dk2) 100%); }
+.dock-head b { font-size: 1.05rem; letter-spacing: -.02em; }
+.dock-head small { color: rgba(255, 255, 255, .72); }
+.dock-mark { width: 40px; height: 40px; border-radius: 13px; background: linear-gradient(145deg, var(--tang), var(--tang-deep)); color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, .22); font-size: 1.15rem; position: relative; }
+.dock-mark::after { content: ''; position: absolute; right: -3px; bottom: -3px; width: 11px; height: 11px; border-radius: 50%; background: #5ee0a0; border: 2px solid var(--dk); }
+.dock-icon { color: rgba(255, 255, 255, .78); }
+.dock-icon:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+.dock-body { background: #fbfcfc; padding: 1rem; }
+.dock-body .msg { border-radius: 1.05rem; box-shadow: 0 1px 2px rgba(14, 44, 50, .05); }
+.dock-body .msg.assistant { background: #fff; border: 1px solid var(--dk-line); border-top-left-radius: .3rem; }
+.dock-body .msg.user { background: linear-gradient(135deg, var(--dk), var(--dk2)); border-top-right-radius: .3rem; }
+.dock-hello { background: var(--dk-soft); color: var(--dk); border-radius: 1rem; font-weight: 500; line-height: 1.6; }
+.dock-examples button { border-color: var(--dk-line); background: #fff; border-radius: .9rem; transition: transform .12s, box-shadow .12s, border-color .12s; }
+.dock-examples button:hover { border-color: var(--tang); transform: translateY(-1px); box-shadow: 0 6px 14px rgba(14, 44, 50, .1); }
+.dock-examples i, .dock-tools li i { color: var(--tang-deep); }
+.dock-tools summary { color: var(--dk2); }
+.agent-dock .agent-steps { background: var(--dk-soft); border: 1px solid var(--dk-line); }
+.agent-dock .agent-steps li i, .agent-dock .agent-steps .res { color: var(--dk2); }
+.agent-dock .agent-steps li.bad i, .agent-dock .agent-steps li.bad .res { color: var(--danger); }
+.dock-input { background: #fff; border-top: 1px solid var(--dk-line); padding: .75rem; }
+.dock-input .form-control { border-radius: 99px; border-color: var(--dk-line); background: #f4f8f8; padding-left: 1rem; }
+.dock-input .form-control:focus { border-color: var(--dk2); box-shadow: 0 0 0 .2rem rgba(38, 106, 115, .15); background: #fff; }
+.dock-input .btn-primary { --bs-btn-bg: var(--tang); --bs-btn-border-color: var(--tang); --bs-btn-hover-bg: var(--tang-deep); --bs-btn-hover-border-color: var(--tang-deep); --bs-btn-disabled-bg: #e3c9a8; --bs-btn-disabled-border-color: #e3c9a8; width: 42px; height: 42px; border-radius: 50%; padding: 0; flex: none; display: grid; place-items: center; }
+.dock-fab { background: linear-gradient(135deg, var(--dk), var(--dk2)); box-shadow: 0 10px 26px rgba(14, 44, 50, .38); padding: .75rem 1.2rem .75rem .9rem; }
+.dock-fab:hover { background: linear-gradient(135deg, #0f3139, var(--dk)); }
+.dock-fab i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--tang); font-size: .95rem; }
+@media (max-width: 575px) { .agent-dock { width: auto; } }
