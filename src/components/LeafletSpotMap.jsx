@@ -6,7 +6,6 @@ import { kakaoPin } from '../lib/mapLinks'
 
 // 실제 지도(OpenStreetMap, 키 필요 없음) 위에 명소 핀, 실측 경로(고도 색), 경로 위 안내 지점, 주변 장소(번호)를 올린다.
 // 오른쪽 위에서 "지도 / 위성" 전환 (위성: Esri World Imagery — 밭담과 돌담이 실제로 보인다).
-// NaverSpotMap 과 같은 props. 네이버 지도 키가 없을 때의 기본 지도다.
 export default function LeafletSpotMap({ spot, kind, prof, places = [], dots = [] }) {
   const box = useRef(null)
   const map = useRef(null)

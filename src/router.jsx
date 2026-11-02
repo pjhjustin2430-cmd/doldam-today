@@ -11,8 +11,8 @@ import { useAppStore } from './store/useAppStore'
 
 export const NAV_ITEMS = [
   { to: '/', label: '홈', icon: 'house' },
-  { to: '/wind', label: '바람과 돌담', icon: 'wind' },
   { to: '/spots', label: '명소·도감', icon: 'bricks' },
+  { to: '/wind', label: '바람과 돌담', icon: 'wind' },
   { to: '/my', label: '내 수첩', icon: 'patch-check' },
 ]
 
