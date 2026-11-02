@@ -3,13 +3,33 @@
     "icn1"
   ],
   "functions": {
-    "api/*.js": {
-      "includeFiles": "server/**",
-      "maxDuration": 30
-    },
     "api/agent.js": {
       "includeFiles": "server/**",
       "maxDuration": 60
+    },
+    "api/air.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    },
+    "api/exhibitions.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    },
+    "api/hello.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    },
+    "api/nearby.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    },
+    "api/spots.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    },
+    "api/weather.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
     }
   },
   "rewrites": [
