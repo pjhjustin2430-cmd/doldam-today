@@ -34,7 +34,7 @@ create policy "delete all" on favorites for delete using (true);
 | southkorea-maps (kostat 2013) | 해안선 → `src/data/jejuCoast.json` |
 
 - 명소 데이터 만들기: `node scripts/buildDoldam.mjs` → `server/data/doldamSpots.json` 과 `public/doldam/stonepark/*.jpg`(사진을 960px 로 줄임)
-- 감수굴밭담길·돌문화공원은 CSV 의 실측 좌표입니다. 나머지 10곳(환해장성 3·별방진·성읍·방사탑·가파도·우도·구엄 돌염전·김녕)은 직접 정리한 대표 명소이고, 좌표는 OpenStreetMap Nominatim 으로 확인한 마을·해안 단위의 근사 위치입니다. 화면에도 "근사"로 표시하고 지도 앱 검색 링크를 둡니다.
+- 감수굴밭담길·돌문화공원은 CSV 의 실측 좌표입니다. 나머지 12곳은 직접 정리한 대표 명소입니다. 이 중 7곳(별방진·성읍·가파도·구엄 돌염전·신흥리 방사탑·신산환해장성·신풍리 밭담길)은 한국관광공사 TourAPI 에 등록된 같은 이름의 관광지라 그 좌표와 사진을 쓰고("관광공사 좌표" 배지), 나머지 5곳(삼양·한담·온평 환해장성, 우도, 김녕)은 OpenStreetMap Nominatim 으로 확인한 마을·해안 단위의 근사 위치입니다("근사 위치" 배지).
 - 서버 함수: `api/spots.js`(명소·종류) · `api/nearby.js` · `api/weather.js` · `api/air.js` · `api/agent.js`(도구: search_doldam_spots, get_spot_detail, get_weather, find_nearby_places, get_air_quality, get_stonepark_exhibitions) · `api/exhibitions.js`
 
 ## 네이버 지도 (선택)

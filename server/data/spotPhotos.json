@@ -1,15 +1,4 @@
 {
- "gamsugul": [
-  {
-   "src": "/doldam/spots/woljeong-batdam.jpg",
-   "caption": "구좌읍 월정리 밭담 (이웃 마을)",
-   "credit": "Sgroey",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Jeju_traditional_stone_walls_woljeongri_jeju_korea.jpg",
-   "source": "Wikimedia Commons"
-  }
- ],
  "hwanhae-samyang": [
   {
    "src": "/doldam/spots/handong-hwanhae.jpg",
@@ -70,26 +59,22 @@
    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
    "url": "https://commons.wikimedia.org/wiki/File:Seongeup_Historic_Village_Dol_hareubang.jpg",
    "source": "Wikimedia Commons"
-  }
- ],
- "bukchon": [
-  {
-   "src": "/doldam/spots/yongsu-bangsatap-1.jpg",
-   "caption": "한경면 용수리 방사탑 (같은 방사탑)",
-   "credit": "Grapesurgeon",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Yongsu-ri_bangsatap_01.jpg",
-   "source": "Wikimedia Commons"
   },
   {
-   "src": "/doldam/spots/yongsu-bangsatap-2.jpg",
-   "caption": "한경면 용수리 방사탑 (같은 방사탑)",
-   "credit": "Grapesurgeon",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Yongsu-ri_bangsatap_02.jpg",
-   "source": "Wikimedia Commons"
+   "src": "/doldam/spots/seongeup-kto-1.jpg",
+   "caption": "성읍민속마을",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/seongeup-kto-2.jpg",
+   "caption": "성읍민속마을",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
   }
  ],
  "gapado": [
@@ -101,6 +86,14 @@
    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
    "url": "https://commons.wikimedia.org/wiki/File:Gapado_scenery.JPG",
    "source": "Wikimedia Commons"
+  },
+  {
+   "src": "/doldam/spots/gapado-kto-1.jpg",
+   "caption": "밭이 돌담으로 나뉜 가파도",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
   }
  ],
  "udo": [
@@ -125,20 +118,163 @@
    "source": "Wikimedia Commons"
   }
  ],
+ "gamsugul": [
+  {
+   "src": "/doldam/spots/gamsugul-kto-1.jpg",
+   "caption": "감수굴밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/gamsugul-kto-2.jpg",
+   "caption": "감수굴밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/gamsugul-kto-3.jpg",
+   "caption": "감수굴밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/gamsugul-kto-4.jpg",
+   "caption": "감수굴밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  }
+ ],
  "gueom": [
   {
-   "src": "/doldam/spots/gueom-salt.jpg",
-   "caption": "구엄 돌염전",
-   "credit": "Jeju Olle Foundation",
-   "license": "CC BY-SA 4.0",
-   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Jeju_Olle_Route_16_(2).jpg",
-   "source": "Wikimedia Commons"
+   "src": "/doldam/spots/gueom-kto-1.jpg",
+   "caption": "구엄리 돌염전",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/gueom-kto-2.jpg",
+   "caption": "구엄리 돌염전",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/gueom-kto-3.jpg",
+   "caption": "구엄리 돌염전",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/gueom-kto-4.jpg",
+   "caption": "구엄리 돌염전",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  }
+ ],
+ "sinsan": [
+  {
+   "src": "/doldam/spots/sinsan-kto-1.jpg",
+   "caption": "신산환해장성",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinsan-kto-2.jpg",
+   "caption": "신산환해장성",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinsan-kto-3.jpg",
+   "caption": "신산환해장성",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  }
+ ],
+ "sinheung": [
+  {
+   "src": "/doldam/spots/sinheung-kto-1.jpg",
+   "caption": "신흥리 방사탑",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinheung-kto-2.jpg",
+   "caption": "신흥리 방사탑",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinheung-kto-3.jpg",
+   "caption": "신흥리 방사탑",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinheung-kto-4.jpg",
+   "caption": "신흥리 방사탑",
+   "credit": "한국관광공사",
+   "license": "공공누리 제1유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType1.do",
+   "source": "TourAPI"
+  }
+ ],
+ "sinpung": [
+  {
+   "src": "/doldam/spots/sinpung-kto-1.jpg",
+   "caption": "신풍리 밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinpung-kto-2.jpg",
+   "caption": "신풍리 밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
+  },
+  {
+   "src": "/doldam/spots/sinpung-kto-3.jpg",
+   "caption": "신풍리 밭담길",
+   "credit": "한국관광공사",
+   "license": "공공누리 제3유형",
+   "licenseUrl": "https://www.kogl.or.kr/info/licenseType3.do",
+   "source": "TourAPI"
   }
  ],
  "byeolbangjin": [
   {
-   "src": "/doldam/spots/byeolbangjin-1.jpg",
+   "src": "/doldam/spots/byeolbangjin-kto-1.jpg",
    "caption": "별방진",
    "credit": "한국관광공사",
    "license": "공공누리 제1유형",
@@ -146,7 +282,7 @@
    "source": "TourAPI"
   },
   {
-   "src": "/doldam/spots/byeolbangjin-2.jpg",
+   "src": "/doldam/spots/byeolbangjin-kto-2.jpg",
    "caption": "별방진",
    "credit": "한국관광공사",
    "license": "공공누리 제1유형",

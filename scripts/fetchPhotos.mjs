@@ -14,7 +14,6 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 const HANDONG = ['Handong Hwanhaejangseong.jpg', '구좌읍 한동리 환해장성 (같은 환해장성)', 'handong-hwanhae']
 const PICKS = {
-  gamsugul: [['Jeju traditional stone walls woljeongri jeju korea.jpg', '구좌읍 월정리 밭담 (이웃 마을)', 'woljeong-batdam']],
   'hwanhae-samyang': [HANDONG],
   'hwanhae-handam': [HANDONG],
   'hwanhae-onpyeong': [HANDONG],
@@ -23,14 +22,9 @@ const PICKS = {
     ['Seongeup Folk Village 01.jpg', '성읍민속마을 돌담 골목', 'seongeup-2'],
     ['Seongeup Historic Village Dol hareubang.jpg', '돌하르방과 돌담', 'seongeup-3'],
   ],
-  bukchon: [
-    ['Yongsu-ri bangsatap 01.jpg', '한경면 용수리 방사탑 (같은 방사탑)', 'yongsu-bangsatap-1'],
-    ['Yongsu-ri bangsatap 02.jpg', '한경면 용수리 방사탑 (같은 방사탑)', 'yongsu-bangsatap-2'],
-  ],
   gapado: [['Gapado scenery.JPG', '가파도 돌담길', 'gapado-1']],
   udo: [['Udo, Jeju Province, South Korea 02.jpg', '우도 해안과 마을', 'udo-1']],
   gimnyeong: [['13 사진 지질마을이야기 만장굴 둘러보기 밭담1.JPG', '김녕 만장굴 일대 밭담', 'gimnyeong-batdam']],
-  gueom: [['Jeju Olle Route 16 (2).jpg', '구엄 돌염전', 'gueom-salt']],
 }
 
 const plain = (html = '') => html.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/\s+/g, ' ').trim()
@@ -81,33 +75,52 @@ for (const [id, picks] of Object.entries(PICKS)) {
     result[id].push({ src: `/doldam/spots/${name}.jpg`, caption, ...done.get(name) })
   }
 }
-// ── 한국관광공사 TourAPI: 별방진 (contentId 128796, 모든 사진이 공공누리 제1유형 = 출처 표시만 하면 이용 가능)
-//    커먼즈에 별방진 사진이 없어서 관광공사에 등록된 같은 이름의 관광지 사진을 쓴다. 좌표는 buildDoldam.mjs 의 별방진 좌표(관광공사 등록 좌표)와 같다.
-const env = Object.fromEntries(fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split(/\r?\n/).filter((l) => l.includes('=')).map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1)]))
-const TOUR = { 'byeolbangjin': { contentId: '128796', name: '별방진', count: 2, prefer: ['별방진_6', '별방진_9'] } }
-const KOGL1 = 'https://www.kogl.or.kr/info/licenseType1.do'
+// ── 한국관광공사 TourAPI: 그 장소 자체의 사진 (contentId 의 detailImage2). 눈으로 확인해 고른 사진 이름 목록.
+//    mode 'replace' = 이 사진들만, 'append' = 위의 커먼즈 사진 뒤에 덧붙임. 사진마다 공공누리 유형을 따로 기록한다.
+//    (제3유형은 출처 표시 + 변경 금지: 크기만 줄이고 자르거나 합성하지 않는다)
+const env = Object.fromEntries(fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split(/\r?\n/).filter((l) => l.includes('=')).map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1).trim()]))
+const KEY = fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split(/\r?\n/).filter((x) => x.startsWith('DATA_GO_KR_KEY=')).map((x) => x.slice(15).trim())[0] ?? env.DATA_GO_KR_KEY // 유효한 키가 둘째 줄에 있어도 첫 줄 우선
+const KOGL = {
+  Type1: ['공공누리 제1유형', 'https://www.kogl.or.kr/info/licenseType1.do'],
+  Type3: ['공공누리 제3유형', 'https://www.kogl.or.kr/info/licenseType3.do'],
+}
+const TOUR = {
+  gamsugul: { contentId: 3056401, mode: 'replace', caption: '감수굴밭담길', names: ['감수굴 밭담길 (6)', '감수굴 밭담길 (4)', '감수굴 밭담길 (14)', '감수굴 밭담길 (12)'] },
+  gueom: { contentId: 2779527, mode: 'replace', caption: '구엄리 돌염전', names: ['제주_구엄리 돌염전 (6)', '제주_제주_구엄리 돌염전_외부_3.jpg', '제주_제주_구엄리 돌염전_외부_2.jpg', '제주_제주_구엄리 돌염전_외부_4.jpg'] },
+  sinsan: { contentId: 3553902, mode: 'replace', caption: '신산환해장성', names: ['서귀포_신산환해장성 (1)', '서귀포_신산환해장성 (4)', '서귀포_신산환해장성 (2)'] },
+  sinheung: { contentId: 129402, mode: 'replace', caption: '신흥리 방사탑', names: ['제주_제주_방사탑(제주)_외부_4.JPG', '제주_제주_방사탑(제주)_외부_2.JPG', '제주_제주_방사탑(제주) (1)', '제주_제주_방사탑(제주)_외부_1.JPG'] },
+  sinpung: { contentId: 2661821, mode: 'replace', caption: '신풍리 밭담길', names: ['신풍리 밭담길_2', '제주_서귀포_신풍리 밭담길(11)', '제주_서귀포_신풍리 밭담길(12)'] },
+  seongeup: { contentId: 126471, mode: 'append', caption: '성읍민속마을', names: ['돌담과 초가에 남은 삶, 제주 성읍마을 여행_제주_서귀포_성읍민속마을_5.jpg', '제주_성읍민속마을 (7)'] },
+  gapado: { contentId: 126446, mode: 'append', caption: '밭이 돌담으로 나뉜 가파도', names: ['가파도 (1)'] },
+  byeolbangjin: { contentId: 128796, mode: 'replace', caption: '별방진', names: ['별방진_6', '별방진_9'] },
+}
 const sharp = (await import('sharp')).default
 for (const [id, t] of Object.entries(TOUR)) {
-  result[id] = []
-  const have = Array.from({ length: t.count }, (_, i) => `${id}-${i + 1}`)
-  if (have.every((n) => fs.existsSync(path.join(OUT, `${n}.jpg`)) && known.has(`/doldam/spots/${n}.jpg`))) {
-    for (const n of have) result[id].push(known.get(`/doldam/spots/${n}.jpg`))
-    continue
+  const r = await (await fetch('https://apis.data.go.kr/B551011/KorService2/detailImage2?' + new URLSearchParams({
+    serviceKey: KEY, MobileOS: 'ETC', MobileApp: 'DoldamToday', _type: 'json', contentId: String(t.contentId), imageYN: 'Y', numOfRows: '50', pageNo: '1',
+  }))).json()
+  const items = [].concat(r.response?.body?.items?.item ?? [])
+  const list = []
+  for (const [i, wanted] of t.names.entries()) {
+    const it = items.find((x) => x.imgname === wanted)
+    if (!it) throw new Error(`${id}: 사진 "${wanted}" 을 TourAPI 에서 못 찾음`)
+    const name = `${id}-kto-${i + 1}`
+    const file = path.join(OUT, `${name}.jpg`)
+    if (!fs.existsSync(file)) {
+      const buf = await download(it.originimgurl.replace('http://', 'https://'))
+      await sharp(buf).rotate().resize({ width: 960, withoutEnlargement: true }).jpeg({ quality: 78, mozjpeg: true }).toFile(file) // 크기만 줄임
+      console.log('받음', name, wanted, it.cpyrhtDivCd)
+      await sleep(600)
+    }
+    const [license, licenseUrl] = KOGL[it.cpyrhtDivCd] ?? ['공공누리', 'https://www.kogl.or.kr']
+    list.push({ src: `/doldam/spots/${name}.jpg`, caption: t.caption, credit: '한국관광공사', license, licenseUrl, source: 'TourAPI' })
   }
-  const r = await fetch('https://apis.data.go.kr/B551011/KorService2/detailImage2?' + new URLSearchParams({
-    serviceKey: env.DATA_GO_KR_KEY, MobileOS: 'ETC', MobileApp: 'DoldamToday', _type: 'json', contentId: t.contentId, imageYN: 'Y', numOfRows: '10', pageNo: '1',
-  }))
-  const imgs = [].concat((await r.json()).response?.body?.items?.item ?? []).filter((x) => x.cpyrhtDivCd === 'Type1' && (!t.prefer || t.prefer.includes(x.imgname))) // 성벽이 보이는 사진만 (포구 풍경은 제외)
-    .sort((p, q) => (t.prefer ?? []).indexOf(p.imgname) - (t.prefer ?? []).indexOf(q.imgname)).slice(0, t.count) // 성벽이 잘 보이는 사진을 앞에
-  for (const [i, x] of imgs.entries()) {
-    const buf = await download(x.originimgurl.replace('http://', 'https://'))
-    const name = `${id}-${i + 1}`
-    await sharp(buf).rotate().resize({ width: 960, withoutEnlargement: true }).jpeg({ quality: 78, mozjpeg: true }).toFile(path.join(OUT, `${name}.jpg`))
-    result[id].push({ src: `/doldam/spots/${name}.jpg`, caption: t.name, credit: '한국관광공사', license: '공공누리 제1유형', licenseUrl: KOGL1, source: 'TourAPI' })
-    console.log('받음', name, x.imgname)
-    await sleep(800)
-  }
+  result[id] = t.mode === 'append' ? [...(result[id] ?? []), ...list] : list
 }
+
+// 쓰지 않게 된 예전 사진 파일 정리
+const used = new Set(Object.values(result).flat().map((p) => path.basename(p.src)))
+for (const f of fs.readdirSync(OUT)) if (f.endsWith('.jpg') && !used.has(f)) { fs.unlinkSync(path.join(OUT, f)); console.log('정리', f) }
 
 fs.writeFileSync(jsonFile, JSON.stringify(result, null, 1))
 console.log('명소', Object.keys(result).length, '곳 / 사진', Object.values(result).flat().length, '장')

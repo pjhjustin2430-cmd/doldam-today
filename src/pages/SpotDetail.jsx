@@ -67,7 +67,7 @@ function Detail({ spot, kind, prev, next, onStamp, onMap }) {
   const stats = [
     ['종류', kind?.name],
     [spot.hasTrack ? '걷는 거리' : '위치', spot.hasTrack ? `${spot.dist}km` : spot.area.replace(/^.*?시 /, '')],
-    [spot.hasTrack ? '소요시간' : '위치 정확도', spot.hasTrack ? `약 ${spot.minutes}분` : spot.approx ? '마을·해안 근사' : '지명 확인'],
+    [spot.hasTrack ? '소요시간' : '위치 정확도', spot.hasTrack ? `약 ${spot.minutes}분` : spot.coordSource === 'kto' ? '관광공사 좌표' : spot.approx ? '마을·해안 근사' : '지명 확인'],
     ['무장애 조사', spot.hasTrack ? '있음' : '없음'],
     ['오늘 걷기', fit ? <Badge bg={fit.variant}>{fit.label}</Badge> : '확인 중'],
   ]
@@ -109,7 +109,7 @@ function Detail({ spot, kind, prev, next, onStamp, onMap }) {
       <div className="map-note">
         {spot.hasTrack
           ? `공공데이터(${spot.source})의 실측 경로예요. 선 색은 고도예요(낮음 청록 → 높음 벽돌색).`
-          : `${spot.approx ? '마을·해안 단위의 대략적인 위치예요.' : '지명으로 확인한 위치예요.'} 번호 핀은 가까운 관광지예요(누르면 카카오맵). 정확한 위치는 아래 '찾아가기'로 확인하세요.`}
+          : `${spot.coordSource === 'kto' ? '한국관광공사에 등록된 관광지 좌표예요.' : spot.approx ? '마을·해안 단위의 대략적인 위치예요.' : '지명으로 확인한 위치예요.'} 번호 핀은 가까운 관광지예요(누르면 카카오맵). 정확한 위치는 아래 '찾아가기'로 확인하세요.`}
       </div>
 
       <div className="stat-bar">

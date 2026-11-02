@@ -56,7 +56,7 @@ export default function DoldamMap() {
       <header className="page-head">
         <div className="eyebrow">3D 지도</div>
         <h1>제주를 돌려 보며 돌담 고르기</h1>
-        <p>드래그로 돌리고 휠로 확대하세요. 핀이나 이름표를 누르면 그곳으로 확대되고, 사진이 있는 곳은 사진도 나와요. 키보드 ← → 로 다음 명소, Esc 로 전체 보기. 돌문화공원 외에는 마을·해안 단위의 근사 위치예요.</p>
+        <p>드래그로 돌리고 휠로 확대하세요. 핀이나 이름표를 누르면 그곳으로 확대되고, 사진이 있는 곳은 사진도 나와요. 키보드 ← → 로 다음 명소, Esc 로 전체 보기. "근사 위치" 배지가 붙은 곳은 마을·해안 단위의 대략적인 위치예요.</p>
       </header>
       <ErrorAlert error={spotsError} />
       <Row className="g-4">
