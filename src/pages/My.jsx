@@ -28,12 +28,15 @@ export default function My() {
       )}
       {favLoading ? <Loading /> : favorites.length === 0 ? <Empty text="아직 찍은 도장이 없어요. 아래에서 가고 싶은 돌담을 골라 보세요." /> : (
         <Row xs={1} sm={2} lg={3} className="g-3">
-          {favorites.map((f) => (
+          {favorites.map((f) => {
+            const sp = spots.find((x) => x.id === f.item_id)
+            return (
             <Col key={f.id}>
-              <ItemCard title={f.title} badge="다녀옴" subtitle={new Date(f.created_at).toLocaleDateString('ko-KR')}
+              <ItemCard title={f.title} badge="다녀옴" photo={sp?.photos?.[0]} color={kinds.find((x) => x.id === sp?.kind)?.color} subtitle={new Date(f.created_at).toLocaleDateString('ko-KR')}
                 onRemove={() => removeFavorite(f.id)} />
             </Col>
-          ))}
+            )
+          })}
         </Row>
       )}
 
@@ -46,7 +49,9 @@ export default function My() {
               return (
                 <Col key={s.id}>
                   <Link to={`/spots/${s.id}`} className="todo-card" style={{ '--kc': k?.color }}>
-                    <i className={`bi bi-${k?.icon ?? 'bricks'}`} />
+                    {s.photos?.[0]
+                      ? <span className="todo-photo" role="img" aria-label={s.photos[0].caption} style={{ backgroundImage: `url(${s.photos[0].src})` }} />
+                      : <i className={`bi bi-${k?.icon ?? 'bricks'}`} />}
                     <b>{s.name}</b>
                     <span>{k?.name}</span>
                   </Link>

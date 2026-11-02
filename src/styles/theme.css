@@ -442,3 +442,9 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .kind-legend { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .9rem; margin: .5rem 0 0; padding: 0; font-size: .8rem; color: var(--muted); }
 .kind-legend li { display: inline-flex; align-items: center; gap: .35rem; }
 .kind-legend i { width: 12px; height: 12px; border-radius: 4px; }
+
+/* 내 수첩: 도장 카드·안 가 본 곳 사진 */
+.item-card { overflow: hidden; }
+.item-card-img.has-photo { position: relative; height: 130px; background-size: cover; background-position: center; }
+.todo-card .todo-photo { display: block; width: 100%; height: 72px; border-radius: .6rem; margin-bottom: .35rem; background-size: cover; background-position: center; filter: saturate(.75); }
+.todo-card:hover .todo-photo { filter: none; }
