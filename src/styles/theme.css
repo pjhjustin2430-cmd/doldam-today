@@ -424,3 +424,18 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .dock-fab:hover { background: linear-gradient(135deg, #0f3139, var(--dk)); }
 .dock-fab i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--tang); font-size: .95rem; }
 @media (max-width: 575px) { .agent-dock { width: auto; } }
+
+/* 홈 실제 지도 + 번호 핀 */
+.home-map .hm-box { width: 100%; height: 440px; border-radius: 1.2rem; }
+.home-map .leaflet-wrap { border-radius: 1.2rem; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.hm-pin { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--kc); color: #fff; font: 800 .8rem/1 'Pretendard', system-ui, sans-serif; border: 2.5px solid #fff; box-shadow: 0 3px 8px rgba(30, 34, 38, .35); transition: transform .12s; }
+.hm-on .hm-pin { transform: scale(1.3); box-shadow: 0 6px 14px rgba(30, 34, 38, .45); }
+.hm-pop { display: grid; gap: .15rem; min-width: 120px; font-family: 'Pretendard', system-ui, sans-serif; }
+.hm-pop b { font-size: .95rem; }
+.hm-pop small { color: var(--muted); }
+.hm-pop button { margin-top: .35rem; border: 0; border-radius: 99px; padding: .3rem .7rem; background: var(--brand); color: #fff; font-weight: 700; font-size: .78rem; }
+.hm-list { list-style: none; margin: .8rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.hm-list button { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: .22rem .7rem .22rem .3rem; font-size: .82rem; color: var(--ink); transition: border-color .12s, background .12s; }
+.hm-list button:hover, .hm-list button.on { border-color: var(--kc, var(--brand)); background: var(--brand-soft); }
+.hm-no { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--kc); color: #fff; font-size: .7rem; font-weight: 800; }
+@media (max-width: 575px) { .home-map .hm-box { height: 320px; } }

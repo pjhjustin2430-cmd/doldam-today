@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import IslandMap2D from '../components/IslandMap2D'
+import IslandMapReal from '../components/IslandMapReal'
 import KindBadge from '../components/KindBadge'
 import { ping } from '../api/client'
 import { isSupabaseReady, supabase } from '../lib/supabase'
@@ -56,7 +56,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-map">
-          {spots.length ? <IslandMap2D spots={spots} kinds={kinds} onPick={(s) => navigate(`/spots/${s.id}`)} /> : <div className="text-muted p-5">지도를 불러오는 중...</div>}
+          {spots.length ? <IslandMapReal spots={spots} kinds={kinds} onPick={(s) => navigate(`/spots/${s.id}`)} /> : <div className="text-muted p-5">지도를 불러오는 중...</div>}
         </div>
       </section>
       <div className="wall-band" aria-hidden="true" />
