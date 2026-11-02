@@ -9,7 +9,7 @@ const TOOLS = {
   search_doldam_spots: { label: '돌담 명소 검색', src: '제주 무장애여행정보 · 직접 정리', icon: 'search' },
   get_spot_detail: { label: '명소 상세·접근성', src: '무장애여행정보 CSV', icon: 'universal-access' },
   get_weather: { label: '날씨', src: '기상청 단기예보', icon: 'cloud-sun' },
-  get_air_quality: { label: '미세먼지', src: '에어코리아', icon: 'wind' },
+  get_air_quality: { label: '미세먼지', src: '에어코리아 (막히면 Open-Meteo 추정)', icon: 'wind' },
   find_nearby_places: { label: '주변 장소', src: '한국관광공사 TourAPI', icon: 'geo-alt' },
   get_stonepark_exhibitions: { label: '돌문화공원 전시', src: '제주특별자치도청 오픈API', icon: 'easel' },
 }

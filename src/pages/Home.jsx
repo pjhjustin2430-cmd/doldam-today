@@ -7,6 +7,7 @@ import { ping } from '../api/client'
 import { isSupabaseReady, supabase } from '../lib/supabase'
 import { recommend } from '../lib/recommend'
 import { useConditions } from '../lib/useConditions'
+import { pickDust } from '../lib/walkability'
 import { usePageTitle } from '../lib/usePageTitle'
 import { useAppStore } from '../store/useAppStore'
 
@@ -71,7 +72,7 @@ export default function Home() {
           <h4 className="fw-bold mb-1">{today.spot.name}</h4>
           <div className="small text-muted mb-2">{today.spot.area}</div>
           <p className="mb-2">{today.reason}</p>
-          <FactChips c={today.spot.weather === '제주시' ? north : south} />
+          <FactChips c={today.spot.weather === '제주시' ? north : south} place={today.spot.weather} />
           <div className="d-flex gap-2 flex-wrap">
             <Button as={Link} to={`/spots/${today.spot.id}`} variant="primary">자세히 보기</Button>
             <Button variant="outline-primary" onClick={() => { useAppStore.getState().select(today.spot.id); navigate('/map') }}><i className="bi bi-badge-3d me-1" />3D 지도에서</Button>
@@ -90,15 +91,15 @@ export default function Home() {
 }
 
 // 추천 근거가 된 오늘의 수치: 바람·비·기온·미세먼지
-function FactChips({ c }) {
-  const dust = c.air.find((a) => Number.isFinite(a.pm10) && a.gradeNo)
+function FactChips({ c, place }) {
+  const dust = pickDust(c.air, place)
   if (!c.fit) return null
   return (
     <div className="fact-chips mb-3">
       <span><i className="bi bi-wind" />바람 {c.fit.wind}m/s</span>
       <span><i className="bi bi-cloud-rain" />비 {c.fit.pop}%</span>
       {c.slots[0] && <span><i className="bi bi-thermometer-half" />{c.slots[0].temp}° {c.slots[0].sky}</span>}
-      {dust && <span><i className="bi bi-emoji-neutral" />미세먼지 {dust.grade}</span>}
+      {dust && <span><i className="bi bi-emoji-neutral" />미세먼지 {dust.grade}{dust.estimated ? ' (추정)' : ''}</span>}
     </div>
   )
 }

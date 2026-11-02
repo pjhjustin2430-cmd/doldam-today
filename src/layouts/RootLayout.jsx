@@ -54,7 +54,7 @@ export default function RootLayout() {
               <h6>지도·보조 데이터</h6>
               <ul>
                 <li>돌담 사진 Wikimedia Commons (CC BY-SA 등)·공공누리 1유형, 작성자는 사진 아래 표시</li>
-                <li>고도 Open-Meteo (Copernicus DEM 90m)</li>
+                <li>고도 Open-Meteo (Copernicus DEM 90m) · 미세먼지 대체값 Open-Meteo 대기질(CAMS 모델 추정)</li>
                 <li>위치 확인 OpenStreetMap Nominatim (© OpenStreetMap contributors)</li>
                 <li>행정구역 경계 southkorea-maps (통계청 2013)</li>
               </ul>

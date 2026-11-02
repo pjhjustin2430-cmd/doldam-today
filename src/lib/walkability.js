@@ -13,3 +13,9 @@ export function walkability(slots = [], air = []) {
   return { label: '걷기 좋아요', variant: 'success', reasons: [`비 ${pop}%`, `바람 ${wind}m/s`], pop, wind }
 }
 
+
+// 화면에 보여줄 미세먼지 한 줄: 측정값이 있는 것 중, 이름이 그 지역(제주시/서귀포시)으로 시작하는 것을 먼저 고른다
+export function pickDust(air = [], place = '') {
+  const ok = air.filter((a) => Number.isFinite(a.pm10) && a.gradeNo)
+  return (place && ok.find((a) => a.station?.startsWith(place))) || ok[0]
+}

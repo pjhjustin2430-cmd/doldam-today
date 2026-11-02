@@ -14,6 +14,7 @@ import { creditText } from '../lib/photoCredit'
 import { kakaoPin, naverSearch } from '../lib/mapLinks'
 import { placeOf, useConditions } from '../lib/useConditions'
 import { usePageTitle } from '../lib/usePageTitle'
+import { pickDust } from '../lib/walkability'
 import { useAppStore } from '../store/useAppStore'
 
 const TABS = [['12', '주변 관광지'], ['39', '주변 식당'], ['32', '주변 숙박']]
@@ -62,7 +63,7 @@ function Detail({ spot, kind, prev, next, onStamp, onMap }) {
   // 사진은 그 돌담의 사진(또는 같은 종류의 사진)만 보여준다. 없는 명소는 사진 칸을 만들지 않는다
   const gallery = spot.photos ?? []
   const guide = spot.notes?.filter((n) => n.desc) ?? spot.points ?? []
-  const dust = air.find((a) => Number.isFinite(a.pm10) && a.gradeNo)
+  const dust = pickDust(air, spot.weather)
 
   const stats = [
     ['종류', kind?.name],
@@ -129,7 +130,7 @@ function Detail({ spot, kind, prev, next, onStamp, onMap }) {
           {slots[0] && (
             <div className="mini-weather mt-3">
               <i className="bi bi-cloud-sun" /> {slots[0].temp}° {slots[0].sky} · 바람 {fit?.wind}m/s · 비 {fit?.pop}%
-              {dust && <> · 미세먼지 {dust.grade}</>}
+              {dust && <> · 미세먼지 {dust.grade}{dust.estimated ? ' (추정)' : ''}</>}
             </div>
           )}
         </Col>

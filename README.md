@@ -30,6 +30,7 @@ create policy "delete all" on favorites for delete using (true);
 | 제주특별자치도청 오픈API 제주돌문화공원 전시 정보 (F06, 키 없음·XML) | 돌문화공원 상세의 "전시·행사", 에이전트 도구 |
 | 한국관광공사 TourAPI KorService2 (`locationBasedList2`) | 명소 주변 관광지·식당·숙박·사진 |
 | 기상청 단기예보 / 한국환경공단 에어코리아 | 바람·비·미세먼지 → 걷기 적합도, 오늘의 추천 |
+| Open-Meteo 대기질 (CAMS 모델 추정, 키 없음) | 에어코리아가 한도 초과·장애일 때 미세먼지 대체값 (화면에 "모델 추정" 표시) |
 | Open-Meteo Elevation (Copernicus DEM 90m, 키 없음) | 경로 파일에 고도가 없는 감수굴밭담길의 고도 프로필 |
 | southkorea-maps (kostat 2013) | 해안선 → `src/data/jejuCoast.json` |
 

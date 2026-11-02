@@ -9,6 +9,7 @@ import { fetchNearby } from '../api/client'
 import { kakaoPin } from '../lib/mapLinks'
 import { creditText } from '../lib/photoCredit'
 import { placeOf, useConditions } from '../lib/useConditions'
+import { pickDust } from '../lib/walkability'
 import { usePageTitle } from '../lib/usePageTitle'
 import { useAppStore } from '../store/useAppStore'
 
@@ -20,7 +21,7 @@ export default function DoldamMap() {
   const spot = spots.find((s) => s.id === selectedId)
   const place = spot ? placeOf(spot) : '제주시'
   const { slots, air, fit, loading } = useConditions(place)
-  const dust = air.find((a) => Number.isFinite(a.pm10) && a.gradeNo) // 측정값이 비어 있는 측정소는 건너뜀
+  const dust = pickDust(air, place) // 측정값이 비어 있는 측정소는 건너뛰고, 그 지역 값을 먼저
 
   // 명소를 고르면 주변 명소·식당을 관광공사 TourAPI에서 가져온다
   const [near, setNear] = useState({ id: null, list: [], error: '' })
@@ -107,7 +108,7 @@ export default function DoldamMap() {
               <>
                 <Badge bg={fit.variant} className="mb-2">{fit.label}</Badge>
                 <div className="small">바람 {fit.wind}m/s · 비 {fit.pop}%{slots[0] ? ` · ${slots[0].temp}° ${slots[0].sky}` : ''}</div>
-                <div className="small text-muted">미세먼지 {dust ? `${dust.grade} (PM10 ${dust.pm10})` : '정보 없음'}</div>
+                <div className="small text-muted">미세먼지 {dust ? `${dust.grade} (PM10 ${dust.pm10})${dust.estimated ? ' · 모델 추정' : ''}` : '정보 없음'}</div>
                 {fit.variant === 'danger' && <div className="small text-danger mt-1">{fit.reasons.join(' · ')}</div>}
               </>
             ) : <div className="small text-muted">예보를 불러오지 못했어요.</div>}
