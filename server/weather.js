@@ -36,6 +36,6 @@ async function fetchWeather(place, day) {
   }
   return entries.slice(0, 8).map(([time, v]) => ({
     place, time, temp: Number(v.TMP), sky: SKY[v.SKY] ?? v.SKY, rain: PTY[v.PTY] ?? v.PTY,
-    pop: Number(v.POP), wind: Number(v.WSD),
+    pop: Number(v.POP), wind: Number(v.WSD), dir: Number(v.VEC),
   }))
 }

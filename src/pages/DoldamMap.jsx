@@ -23,6 +23,14 @@ export default function DoldamMap() {
   const { slots, air, fit, loading } = useConditions(place)
   const dust = pickDust(air, place) // 측정값이 비어 있는 측정소는 건너뛰고, 그 지역 값을 먼저
 
+  // 바람 줄기: 오늘 제주시 풍속·풍향 (기상청 단기예보). 돌담 켜기 = 밭담 구역에서 바람이 느려지는 설명용 표현
+  const [showWind, setShowWind] = useState(true)
+  const [walls, setWalls] = useState(false)
+  const north = useConditions('제주시')
+  const w = north.slots[0]
+  const wind = showWind && w && Number.isFinite(w.dir) && Number.isFinite(w.wind) ? { speed: w.wind, from: w.dir } : null
+  const windName = w && Number.isFinite(w.dir) ? `${['북', '북동', '동', '남동', '남', '남서', '서', '북서'][Math.round(w.dir / 45) % 8]}풍` : ''
+
   // 명소를 고르면 주변 명소·식당을 관광공사 TourAPI에서 가져온다
   const [near, setNear] = useState({ id: null, list: [], error: '' })
   useEffect(() => {
@@ -57,13 +65,28 @@ export default function DoldamMap() {
       <header className="page-head">
         <div className="eyebrow">3D 지도</div>
         <h1>제주를 돌려 보며 돌담 고르기</h1>
-        <p>드래그로 돌리고 휠로 확대하세요. 핀이나 이름표를 누르면 그곳으로 확대되고, 사진이 있는 곳은 사진도 나와요. 키보드 ← → 로 다음 명소, Esc 로 전체 보기. "근사 위치" 배지가 붙은 곳은 마을·해안 단위의 대략적인 위치예요.</p>
+        <p>드래그로 돌리고 휠로 확대하세요. 핀이나 이름표를 누르면 그곳으로 확대되고, 사진이 있는 곳은 사진도 나와요. 키보드 ← → 로 다음 명소, Esc 로 전체 보기. 오른쪽 위에서 오늘 바람을 켜고, "돌담 켜기"로 밭담 구역을 지나는 바람이 약해지는 모습을 볼 수 있어요. "근사 위치" 배지가 붙은 곳은 마을·해안 단위의 대략적인 위치예요.</p>
       </header>
       <ErrorAlert error={spotsError} />
       <Row className="g-4">
         <Col lg={8}>
           <div className="map-card">
-            {spotsLoading && !spots.length ? <Loading text="불러오는 중..." /> : <DoldamMap3D spots={spots} kinds={kinds} selectedId={selectedId} onPick={pick} />}
+            {spotsLoading && !spots.length ? <Loading text="불러오는 중..." /> : <DoldamMap3D spots={spots} kinds={kinds} selectedId={selectedId} onPick={pick} wind={wind} walls={walls} />}
+            <div className="map-tools">
+              <button type="button" className={`tool-btn ${showWind ? 'on' : ''}`} aria-pressed={showWind} onClick={() => setShowWind(!showWind)}>
+                <i className="bi bi-wind" />바람 {showWind ? '끄기' : '보기'}
+              </button>
+              <button type="button" className={`tool-btn ${walls ? 'on' : ''}`} aria-pressed={walls} disabled={!showWind || !wind} onClick={() => setWalls(!walls)}>
+                <i className="bi bi-bricks" />돌담 {walls ? '끄기' : '켜기'}
+              </button>
+            </div>
+            {showWind && (wind ? (
+              <div className="wind-badge" role="status">
+                <b><i className="bi bi-arrow-up" style={{ display: 'inline-block', transform: `rotate(${(w.dir + 180) % 360}deg)` }} /> {windName} {wind.speed}m/s</b>
+                <span>오늘 제주시 기준 · 줄기는 바람이 흘러가는 쪽이에요</span>
+                {walls && <span className="amber">주황 줄기 = 밭담 구역을 지나 약해진 바람 (설명용 표현)</span>}
+              </div>
+            ) : <div className="wind-badge"><span>{north.loading ? '풍향을 불러오는 중...' : '바람 정보를 불러오지 못했어요'}</span></div>)}
             {selectedId && <button type="button" className="map-back" onClick={() => select(null)}><i className="bi bi-arrows-fullscreen me-1" />전체 보기</button>}
             {kinds.length > 0 && (
               <ul className="map-legend" aria-label="범례">

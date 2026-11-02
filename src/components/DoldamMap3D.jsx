@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Html, Line, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
-import { buildIslands, buildTerrain, heightAt, toXZ } from '../lib/terrain'
+import { LAND_Y, buildIslands, buildTerrain, elevation, heightAt, toXZ } from '../lib/terrain'
 import { layoutLabels } from '../lib/mapGeom'
 
 const HOME = { target: new THREE.Vector3(0, 0, 0), pos: new THREE.Vector3(0, 9.2, 7.4) }
@@ -107,7 +107,49 @@ function Tags({ spots, kinds, selectedId, onPick }) {
   })
 }
 
-export default function DoldamMap3D({ spots, kinds, selectedId, onPick }) {
+// 바람 줄기: 오늘 풍속·풍향대로 지도 위를 흐르는 가는 줄 900개.
+// 저지대 밭(고도 350m 이하의 땅)은 밭담으로 나뉜 곳이라, walls 가 켜져 있으면 그 구역에서 바람이 느려지고 주황색으로 바뀐다 (설명용 표현).
+// wind.from 은 바람이 불어오는 방향 각도(북 0°, 시계방향)라서 줄기는 반대쪽(+180°)으로 흐른다.
+const N_WIND = 900
+function WindField({ wind, walls }) {
+  const s = useMemo(() => {
+    const geo = new THREE.BufferGeometry()
+    const pos = new Float32Array(N_WIND * 6), col = new Float32Array(N_WIND * 6)
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3))
+    const p = Array.from({ length: N_WIND }, () => ({ x: (Math.random() - 0.5) * 8, z: (Math.random() - 0.5) * 4.8, slow: 1 }))
+    return { geo, pos, col, p, still: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches }
+  }, [])
+  useFrame((_, rawDt) => {
+    const dt = Math.min(rawDt, 0.05)
+    const phi = ((wind.from + 180) * Math.PI) / 180
+    const dx = Math.sin(phi), dz = -Math.cos(phi) // 북쪽이 -z
+    const base = wind.speed * 0.07, len = 0.1 + wind.speed * 0.018
+    for (let i = 0; i < N_WIND; i++) {
+      const q = s.p[i]
+      const lat = 33.38 - q.z / 11.1, lng = 126.55 + q.x / 9.26
+      const m = elevation(lat, lng)
+      const target = walls && m > 0.5 && m < 350 ? 0.4 : 1 // 밭담 구역(저지대 땅)에서는 40% 속도
+      q.slow += (target - q.slow) * Math.min(1, dt * 6)
+      if (!s.still) { q.x += dx * base * q.slow * dt; q.z += dz * base * q.slow * dt }
+      if (q.x < -4) q.x = 4; else if (q.x > 4) q.x = -4
+      if (q.z < -2.5) q.z = 2.5; else if (q.z > 2.5) q.z = -2.5
+      const y = Math.max(0.05, LAND_Y + m / 2000 + 0.05) // 땅 위 0.05 (한라산 비탈을 타고 오른다)
+      const o = i * 6, tail = len * (0.55 + 0.45 * q.slow), k = clamp01((1 - q.slow) / 0.6)
+      s.pos[o] = q.x; s.pos[o + 1] = y; s.pos[o + 2] = q.z
+      s.pos[o + 3] = q.x - dx * tail; s.pos[o + 4] = y; s.pos[o + 5] = q.z - dz * tail
+      // 흰색 → 주황(#f0b23a): 앞(머리)은 진하게, 꼬리는 흐리게
+      s.col[o] = 1 - 0.06 * k; s.col[o + 1] = 1 - 0.31 * k; s.col[o + 2] = 1 - 0.77 * k
+      s.col[o + 3] = s.col[o] * 0.35; s.col[o + 4] = s.col[o + 1] * 0.35; s.col[o + 5] = s.col[o + 2] * 0.35
+    }
+    s.geo.attributes.position.needsUpdate = true
+    s.geo.attributes.color.needsUpdate = true
+  })
+  return <lineSegments geometry={s.geo} frustumCulled={false}><lineBasicMaterial vertexColors transparent opacity={0.85} depthWrite={false} /></lineSegments>
+}
+const clamp01 = (v) => Math.min(1, Math.max(0, v))
+
+export default function DoldamMap3D({ spots, kinds, selectedId, onPick, wind = null, walls = false }) {
   const geo = useMemo(() => Object.fromEntries(spots.map((s) => [s.id, { pt: spotPoint(s) }])), [spots])
   const sel = selectedId ? spots.find((s) => s.id === selectedId) : null
   const focus = useMemo(() => {
@@ -125,6 +167,7 @@ export default function DoldamMap3D({ spots, kinds, selectedId, onPick }) {
         </mesh>
         <Terrain />
         <Islets />
+        {wind && <WindField wind={wind} walls={walls} />}
         <Tags spots={spots} kinds={kinds} selectedId={selectedId} onPick={onPick} />
         <OrbitControls makeDefault enablePan={false} minDistance={1.6} maxDistance={24} maxPolarAngle={Math.PI / 2.2} />
         <CameraRig focus={focus} />
