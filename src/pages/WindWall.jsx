@@ -32,7 +32,7 @@ export default function WindWall() {
       <header className="page-head">
         <div className="eyebrow">바람과 돌담</div>
         <h1>돌담은 바람을 어떻게 막을까</h1>
-        <p>오늘 제주 바람을 돌담 모형에 불어 넣었어요. 돌 틈을 지난 바람은 느려지고(주황색), 담 뒤 작물은 덜 흔들려요. 드래그로 돌려 보고, 아래에서 바람 세기를 바꾸거나 돌담을 치워 비교해 보세요.</p>
+        <p>오늘 제주 바람을 돌담 모형에 불어 넣었어요. 돌담을 지난 바람은 느려지고(주황색), 담 뒤 작물은 덜 흔들려요. 드래그로 돌려 보고, 아래에서 바람 세기를 바꾸거나 돌담을 치워 비교해 보세요.</p>
       </header>
 
       <div className="wind-card">

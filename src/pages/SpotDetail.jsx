@@ -11,7 +11,7 @@ import { Empty, ErrorAlert, Loading } from '../components/Status'
 import { fetchNearby } from '../api/client'
 import { loadProfile } from '../lib/elevationProfile'
 import { creditText } from '../lib/photoCredit'
-import { kakaoPin, naverSearch } from '../lib/mapLinks'
+import { kakaoPin } from '../lib/mapLinks'
 import { placeOf, useConditions } from '../lib/useConditions'
 import { usePageTitle } from '../lib/usePageTitle'
 import { pickDust } from '../lib/walkability'
@@ -174,7 +174,7 @@ function Detail({ spot, kind, prev, next, onStamp }) {
               <thead><tr><th>종류</th><th>이름</th><th>거리</th><th>이용 정보</th></tr></thead>
               <tbody>
                 {spot.facilities.map((f, i) => (
-                  <tr key={i}><td>{f.type}</td><td><a href={naverSearch(f.name, f.addr)} target="_blank" rel="noreferrer">{f.name}</a></td><td>{f.radius}m</td><td>{f.info}</td></tr>
+                  <tr key={i}><td>{f.type}</td><td>{f.name}</td><td>{f.radius}m</td><td>{f.info}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -206,7 +206,6 @@ function Detail({ spot, kind, prev, next, onStamp }) {
                           <div className="d">{spot.name}에서 {p.dist >= 1000 ? `${(p.dist / 1000).toFixed(1)}km` : `${p.dist}m`}</div>
                           <div className="go">
                             <span><i className="bi bi-geo-alt-fill" /> 카카오맵으로 열기</span>
-                            <a href={naverSearch(p.title, p.addr)} target="_blank" rel="noreferrer">네이버</a>
                           </div>
                         </div>
                       </div>

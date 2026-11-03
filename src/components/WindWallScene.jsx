@@ -23,7 +23,7 @@ export function shelter(x, y, walls) {
 // 늘 같은 모양이 나오도록 하는 간단한 난수
 const seeded = (s) => () => (s = (s * 16807) % 2147483647) / 2147483647
 
-// 현무암 돌담: 크기가 제각각인 돌을 틈을 두고 4단으로 쌓는다 (제주 돌담은 틈으로 바람을 흘려보내 무너지지 않는다)
+// 현무암 돌담: 크기가 제각각인 돌을 층마다 어긋나게, 사이 공간 없이 맞물려 쌓는다
 function StoneWall() {
   const { geo, stones } = useMemo(() => {
     const rnd = seeded(7)
@@ -31,16 +31,16 @@ function StoneWall() {
     const layers = []
     for (let y = 0.2; y < WALL.h - 0.12; y += 0.37) layers.push(y) // 높이만큼 돌을 단마다 쌓는다
     layers.forEach((y, layer) => {
-      let z = -WALL.len / 2 + rnd() * 0.3
-      while (z < WALL.len / 2 - 0.3) {
-        const w = 0.45 + rnd() * 0.45, h = (layer === layers.length - 1 ? 0.28 : 0.36) + rnd() * 0.1, t = WALL.t * (0.75 + rnd() * 0.3)
+      let z = -WALL.len / 2 - (layer % 2 ? 0.3 : 0) + rnd() * 0.2 // 층마다 시작을 어긋나게
+      while (z < WALL.len / 2 - 0.1) {
+        const w = 0.7 + rnd() * 0.5, h = (layer === layers.length - 1 ? 0.42 : 0.56) + rnd() * 0.1, t = WALL.t * (0.85 + rnd() * 0.25)
         out.push({
-          pos: [(rnd() - 0.5) * 0.08, y + (rnd() - 0.5) * 0.05, z + w / 2],
-          scale: [t / 2, h / 2, w / 2],
-          rot: [(rnd() - 0.5) * 0.4, (rnd() - 0.5) * 0.6, (rnd() - 0.5) * 0.3],
-          color: new THREE.Color('#3d4247').multiplyScalar(0.75 + rnd() * 0.45),
+          pos: [(rnd() - 0.5) * 0.06, y + (rnd() - 0.5) * 0.04, z + w / 2],
+          scale: [t / 2, h / 2, (w / 2) * 1.08],
+          rot: [(rnd() - 0.5) * 0.25, (rnd() - 0.5) * 0.35, (rnd() - 0.5) * 0.2],
+          color: new THREE.Color('#4b5156').multiplyScalar(0.7 + rnd() * 0.65),
         })
-        z += w + 0.04 + rnd() * 0.08 // 돌과 돌 사이 틈
+        z += w * 0.82 // 돌끼리 겹치게 맞물려 사이 공간이 없다
       }
     })
     return { geo: new THREE.DodecahedronGeometry(1, 0), stones: out }
