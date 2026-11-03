@@ -53,3 +53,7 @@ GitHub 연결 후 Import → Environment Variables 에 `.env.example` 의 값 �
 - "근사 위치" 배지가 붙은 5곳(삼양·한담·온평 환해장성, 우도, 김녕)은 지도 앱에서 이름으로 확인하세요. 나머지는 실측 경로(2곳) 또는 한국관광공사 등록 좌표(7곳)입니다.
 - 관광공사 사진은 공공누리 제1유형(출처 표시)과 제3유형(출처 표시 + 변경 금지)이 섞여 있어, 제3유형 사진은 크기만 줄여서 쓰고 자르거나 합성하지 않습니다. 출처와 유형은 각 사진 아래에 표시됩니다.
 - 돌담 사진은 `node scripts/fetchPhotos.mjs` 가 위키미디어 커먼즈(CC BY-SA)·공공누리 1유형 사진을 받아 `public/doldam/spots/` 에 저장하고, 작성자·라이선스·원본 링크를 `server/data/spotPhotos.json` 에 기록합니다. 사진이 없는 명소(별방진)는 사진 칸을 만들지 않고, 장소가 다른 사진은 캡션에 실제 장소를 밝힙니다. 반영은 `node scripts/buildDoldam.mjs`.
+
+## 공유용 이미지
+- QR 코드: `node scripts/makeQr.mjs [주소]` → `public/images/qr.png` (배포 주소로 가는 QR, 흰 바탕·검은 QR)
+- OG 이미지·홈 화면 아이콘: `node scripts/makeOg.mjs` → `public/images/og.png`(1200x630), `icon-180.png`. 사진은 한국관광공사(공공누리 제1유형)이며 이미지 안에 출처를 적었습니다.
