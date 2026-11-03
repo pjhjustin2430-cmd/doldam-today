@@ -5,7 +5,8 @@ import { getAirQuality } from '../server/air.js'
 import { nearbyPlaces } from '../server/tour.js'
 import { stoneparkExhibitions } from '../server/stonepark.js'
 
-const MODEL = 'claude-sonnet-5-5'
+// 모델은 환경변수 ANTHROPIC_MODEL 로 바꾼다 (예: claude-haiku-5-5 = 빠르고 저렴, 없으면 claude-sonnet-5-5)
+const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-5-5'
 
 const tools = [
   {
