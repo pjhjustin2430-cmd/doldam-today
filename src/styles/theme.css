@@ -448,3 +448,15 @@ footer.olle-footer::before { content: ''; position: absolute; left: 0; right: 0;
 .item-card-img.has-photo { position: relative; height: 130px; background-size: cover; background-position: center; }
 .todo-card .todo-photo { display: block; width: 100%; height: 72px; border-radius: .6rem; margin-bottom: .35rem; background-size: cover; background-position: center; filter: saturate(.75); }
 .todo-card:hover .todo-photo { filter: none; }
+
+/* 내 돌담 */
+.wall-no { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: var(--muted); border: 2px solid #c9d2d4; font: 800 .68rem/1 'Pretendard', system-ui, sans-serif; }
+.wall-no.on { background: var(--kc); color: #fff; border-color: #fff; box-shadow: 0 2px 5px rgba(30, 34, 38, .3); }
+.mywall-status { margin: 1rem 0 .4rem; max-width: 420px; }
+.mywall-status b { font-size: 1.6rem; }
+.mywall-status .level { margin-left: .6rem; font-weight: 700; color: var(--brand-deep); }
+.wall-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .5rem; }
+.wall-list li { display: flex; align-items: center; gap: .6rem; background: #fff; border: 1px solid var(--line); border-radius: .8rem; padding: .5rem .7rem; }
+.wall-list li.on { background: var(--brand-soft); }
+.wall-list .nm { flex: 1; font-weight: 600; color: var(--ink); text-decoration: none; }
+.wall-list .done { font-size: .8rem; font-weight: 700; color: var(--brand-deep); }

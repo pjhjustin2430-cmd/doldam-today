@@ -3,6 +3,7 @@ import { Navigate, createBrowserRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
 import WindWall from './pages/WindWall'
+import MyWall from './pages/MyWall'
 import Spots from './pages/Spots'
 import SpotDetail from './pages/SpotDetail'
 import My from './pages/My'
@@ -13,6 +14,7 @@ export const NAV_ITEMS = [
   { to: '/', label: '홈', icon: 'house' },
   { to: '/spots', label: '명소·도감', icon: 'bricks' },
   { to: '/wind', label: '바람과 돌담', icon: 'wind' },
+  { to: '/mywall', label: '내 돌담', icon: 'layers' },
   { to: '/my', label: '내 수첩', icon: 'patch-check' },
 ]
 
@@ -31,6 +33,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'wind', element: <WindWall /> },
+      { path: 'mywall', element: <MyWall /> },
       { path: 'map', element: <Navigate to="/wind" replace /> }, // 예전 3D 지도 주소
       { path: 'spots', element: <Spots /> },
       { path: 'spots/:id', element: <SpotDetail /> },
