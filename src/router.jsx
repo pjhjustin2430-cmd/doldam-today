@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
-import WindWall from './pages/WindWall'
 import Spots from './pages/Spots'
 import SpotDetail from './pages/SpotDetail'
 import My from './pages/My'
@@ -30,7 +29,8 @@ export const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'wind', element: <WindWall /> },
+      // 3D(three.js)는 무거워서 바람과 돌담에 들어갈 때만 따로 불러온다
+      { path: 'wind', lazy: async () => ({ Component: (await import('./pages/WindWall')).default }) },
       { path: 'map', element: <Navigate to="/wind" replace /> }, // 예전 3D 지도 주소
       { path: 'spots', element: <Spots /> },
       { path: 'spots/:id', element: <SpotDetail /> },

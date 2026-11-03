@@ -42,9 +42,9 @@ export function layoutLabels(spots) {
 
 // 이름표를 점 바로 옆에 둔다 (선으로 잇지 않는다). 점에서 가까운 자리부터 후보를 훑어,
 // 이미 놓은 이름표·다른 점과 겹치지 않고 지도 안에 들어가는 첫 자리를 고른다.
-export function layoutNear(spots, view = { x0: -58, x1: 58, y0: -36, y1: 36 }) {
-  const H = 4.4, DOT = 1.9
-  const width = (s) => s.label.length * 2.15 + 5.5
+export function layoutNear(spots, view = { x0: -58, x1: 58, y0: -36, y1: 36 }, k = 1) { // k: 이름표 크기 배율 (휴대폰에서 크게)
+  const H = 4.4 * k, DOT = 1.9
+  const width = (s) => (s.label.length * 2.15 + 5.5) * k
   const dots = spots.map((s) => ({ s, dot: px(s.lat, s.lng) }))
   const placed = [{ x0: -17, x1: 17, y0: -4.5, y1: 11 }] // 가운데 "돌담 N곳" 글자 자리는 비워 둔다
   const free = (c) => {

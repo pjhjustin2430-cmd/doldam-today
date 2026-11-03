@@ -29,7 +29,10 @@ export default function Home() {
         setDb(error ? { state: 'fail', msg: error.message } : { state: 'ok', msg: '연결 OK' }))
     }
     ping()
-      .then((d) => setApi({ state: d.hasDataKey && d.hasClaudeKey ? 'ok' : 'fail', msg: `서버 OK · 공공데이터 키 ${d.hasDataKey ? '있음' : '없음'} · Claude 키 ${d.hasClaudeKey ? '있음' : '없음'}` }))
+      .then((d) => setApi({
+        state: d.hasDataKey && d.claudeOk ? 'ok' : 'fail',
+        msg: `서버 OK · 공공데이터 키 ${d.hasDataKey ? '있음' : '없음'} · Claude 키 ${!d.hasClaudeKey ? '없음' : d.claudeOk ? '사용 가능' : '있지만 사용할 수 없음'}`,
+      }))
       .catch(() => setApi({ state: 'fail', msg: '서버 함수에 연결되지 않아요' }))
   }, [loadSpots])
 
@@ -45,14 +48,14 @@ export default function Home() {
         <div className="hero-copy">
           <div className="eyebrow">제주 콘텐츠·문화 IP · 제주 돌담</div>
           <h1>바람 많은 섬이<br />쌓아 올린 돌담길</h1>
-          <p className="lead">밭담, 환해장성, 방사탑, 돌염전까지. 오늘 바람과 비를 확인하고 걸어 볼 만한 돌담을 골라 드려요.</p>
+          <p className="lead">밭담, 환해장성, 방사탑, 돌염전까지 돌담 14곳. 한 곳씩 다녀올 때마다 내 수첩의 돌벽이 채워져요. 오늘 바람과 비도 함께 알려 드려요.</p>
           <div className="cond-row">
             <Cond title="제주시" c={north} />
             <Cond title="서귀포시" c={south} />
           </div>
           <div className="d-flex gap-2 flex-wrap">
-            <Button as={Link} to="/wind" variant="primary" size="lg"><i className="bi bi-wind me-2" />바람과 돌담</Button>
-            <Button variant="outline-primary" size="lg" onClick={() => useAppStore.getState().setAgentOpen(true)}><i className="bi bi-chat-dots me-2" />돌담지기에게 묻기</Button>
+            <Button as={Link} to="/my" variant="primary" size="lg"><i className="bi bi-patch-check me-2" />내 돌벽 채우기</Button>
+            <Button as={Link} to="/wind" variant="outline-primary" size="lg"><i className="bi bi-wind me-2" />바람과 돌담</Button>
           </div>
         </div>
         <div className="hero-map">

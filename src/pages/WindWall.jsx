@@ -75,8 +75,8 @@ export default function WindWall() {
         </Col>
         <Col lg={5}>
           <div className="panel h-100">
-            <div className="fw-bold mb-2"><i className="bi bi-question-circle me-2 text-primary" />왜 돌 틈을 남겨 둘까?</div>
-            <p className="small mb-2">틈 없이 막힌 벽은 바람을 정면으로 받아 쓰러지기 쉽고, 벽 뒤에 거센 소용돌이가 생겨요. 제주 돌담은 구멍이 숭숭 뚫려 있어 바람의 일부를 흘려보내면서 속도만 늦춰요. 그래서 담도 버티고, 담 뒤의 흙과 작물도 지켜져요.</p>
+            <div className="fw-bold mb-2"><i className="bi bi-question-circle me-2 text-primary" />돌담은 어떻게 바람을 이길까?</div>
+            <p className="small mb-2">매끈한 벽은 바람을 정면으로 받아 벽 뒤에 거센 소용돌이가 생겨요. 크기와 모양이 제각각인 현무암을 맞물려 쌓은 제주 돌담은 울퉁불퉁한 면과 돌 사이 작은 구멍으로 바람을 흩어 속도를 늦춰요. 그래서 담도 버티고, 담 뒤의 흙과 작물도 지켜져요.</p>
             {batdam && <p className="small text-muted mb-3">{batdam.text}</p>}
             <div className="d-flex gap-2 flex-wrap">
               <Link to="/spots?kind=batdam" className="btn btn-sm btn-outline-primary"><i className="bi bi-grid-3x3 me-1" />밭담 명소 보기</Link>
