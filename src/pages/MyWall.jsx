@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Form, ProgressBar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import MyWallScene from '../components/MyWallScene'
+import StoneFillWall from '../components/StoneFillWall'
+import { buildWall, drawWall, paintWall } from '../lib/stoneWall'
 import { usePageTitle } from '../lib/usePageTitle'
 import { useAppStore } from '../store/useAppStore'
 
@@ -13,6 +15,7 @@ export default function MyWall() {
   usePageTitle('내 돌담')
   const { nickname, setNickname, favorites, loadFavorites, stamp, spots, kinds, loadSpots } = useAppStore()
   const canvas = useRef(null)
+  const [view, setView] = useState('fill') // fill = 돌벽 채우기, tower = 3D 돌담
   useEffect(() => { loadSpots() }, [loadSpots])
   useEffect(() => { loadFavorites() }, [nickname, loadFavorites])
   const visited = useMemo(() => new Set(favorites.map((f) => f.item_id)), [favorites])
@@ -20,7 +23,28 @@ export default function MyWall() {
   const kindOf = (s) => kinds.find((k) => k.id === s.kind)
   const me = nickname || '익명'
 
+  function saveFill() {
+    const c = document.createElement('canvas')
+    c.width = 1200; c.height = 630
+    const g = c.getContext('2d')
+    g.fillStyle = '#14263f'; g.fillRect(0, 0, 1200, 630)
+    const wall = buildWall(spots.length)
+    drawWall(g, paintWall(wall, spots, kinds, visited), 0, 0, 1200, 600)
+    g.fillStyle = 'rgba(20,38,63,.88)'; g.fillRect(0, 430, 1200, 200)
+    const F = "'Malgun Gothic','Pretendard',sans-serif"
+    g.fillStyle = '#ffffff'; g.font = `800 56px ${F}`; g.fillText(`${me}의 돌담`, 48, 508)
+    g.fillStyle = '#ff9a8c'; g.font = `700 30px ${F}`; g.fillText(`${n} / ${spots.length}곳 · ${levelOf(n)}`, 50, 560)
+    g.fillStyle = '#9fb3c8'; g.font = `400 24px ${F}`; g.textAlign = 'right'
+    g.fillText('돌담 오늘 · doldam-today-2m16.vercel.app', 1152, 580)
+    c.toBlob((b) => {
+      const a = document.createElement('a')
+      a.href = URL.createObjectURL(b); a.download = '내-돌담.png'; a.click()
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+    })
+  }
+
   function save() {
+    if (view === 'fill') return saveFill()
     if (!canvas.current) return
     const img = new Image()
     img.onload = () => {
@@ -59,8 +83,11 @@ export default function MyWall() {
         value={nickname} onChange={(e) => setNickname(e.target.value)} />
 
       <div className="wind-card">
-        {spots.length > 0 && <MyWallScene spots={spots} kinds={kinds} visited={visited} onCanvas={(el) => { canvas.current = el }} />}
+        {spots.length > 0 && (view === 'fill'
+          ? <StoneFillWall spots={spots} kinds={kinds} visited={visited} />
+          : <MyWallScene spots={spots} kinds={kinds} visited={visited} onCanvas={(el) => { canvas.current = el }} />)}
         <div className="wind-controls">
+          <button type="button" className="tool-btn" onClick={() => setView(view === 'fill' ? 'tower' : 'fill')}><i className="bi bi-arrow-repeat" />{view === 'fill' ? '3D로 보기' : '돌벽으로 보기'}</button>
           <button type="button" className="tool-btn on" onClick={save} disabled={!spots.length}><i className="bi bi-download" />이미지로 저장</button>
         </div>
       </div>
