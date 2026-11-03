@@ -44,7 +44,7 @@ function Detail({ spot, kind, prev, next, onStamp }) {
 
   useEffect(() => {
     let alive = true
-    Promise.allSettled(TABS.map(([t]) => fetchNearby({ lat: spot.lat, lng: spot.lng, type: t, radius: 5000, rows: 8 }))).then((r) => {
+    Promise.allSettled(TABS.map(([t]) => fetchNearby({ lat: spot.lat, lng: spot.lng, type: t, radius: t === '32' ? 20000 : 5000, rows: 8 }))).then((r) => {
       if (!alive) return
       const err = r.find((x) => x.status === 'rejected')
       setData({ loading: false, tabs: Object.fromEntries(TABS.map(([t], i) => [t, r[i].status === 'fulfilled' ? r[i].value : []])), error: err ? err.reason.message : '' })
@@ -190,6 +190,7 @@ function Detail({ spot, kind, prev, next, onStamp }) {
       <Tabs activeKey={tab} onSelect={(k) => setTab(k)} className="place-tabs mt-4">
         {TABS.map(([t, label]) => (
           <Tab key={t} eventKey={t} title={label}>
+            {t === '32' && <div className="small text-muted mt-3">한국관광공사에 등록된 숙박만 보여요. 숙박은 드물어서 반경 20km 안까지 찾았어요.</div>}
             {data.loading ? <Loading /> : (data.tabs[t] ?? []).length === 0 ? <Empty text="근처 정보가 없어요" /> : (
               <>
                 <div className="mt-3"><SpotMap spot={spot} kind={kind} places={data.tabs[t]} /></div>
