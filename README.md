@@ -41,7 +41,7 @@ create policy "delete all" on favorites for delete using (true);
 - 서버 함수: `api/spots.js`(명소·종류) · `api/nearby.js` · `api/weather.js` · `api/air.js` · `api/agent.js`(도구: search_doldam_spots, get_spot_detail, get_weather, find_nearby_places, get_air_quality, get_stonepark_exhibitions) · `api/exhibitions.js`
 
 ## 지도
-명소 상세의 지도는 Leaflet 으로 그리는 실제 지도입니다(키 불필요). 기본은 OpenStreetMap, 오른쪽 위에서 위성(Esri World Imagery)으로 바꿀 수 있고 밭담·돌담이 실제로 보입니다. 그 위에 실측 경로(고도 색)·안내 지점·가까운 관광지(번호 핀, 누르면 카카오맵)를 올립니다. 지도 하단에 출처가 표시되며, 두 타일 서버 모두 소규모·비상업 용도 기준입니다. 휠 확대는 페이지 스크롤을 방해하지 않도록 꺼 두었고 + − 버튼을 씁니다. "찾아가기"의 네이버지도는 이름 검색 링크일 뿐 API 키는 쓰지 않습니다.
+명소 상세의 지도는 Leaflet 으로 그리는 실제 지도입니다(키 불필요). 기본은 OpenStreetMap, 오른쪽 위에서 위성(Esri World Imagery)으로 바꿀 수 있고 밭담·돌담이 실제로 보입니다. 그 위에 실측 경로(고도 색)·안내 지점·가까운 관광지(번호 핀, 누르면 카카오맵)를 올립니다. 지도 하단에 출처가 표시되며, 두 타일 서버 모두 소규모·비상업 용도 기준입니다. 휠 확대는 페이지 스크롤을 방해하지 않도록 꺼 두었고 + − 버튼을 씁니다. "찾아가기"는 카카오맵 길찾기(좌표로 도착지 지정) 링크입니다.
 
 ## 배포 (Vercel)
 GitHub 연결 후 Import → Environment Variables 에 `.env.example` 의 값 입력(`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `DATA_GO_KR_KEY`, `ANTHROPIC_API_KEY`).
